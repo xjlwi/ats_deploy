@@ -1,0 +1,25 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+
+challenge_like:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."ChallengeLike" ORDER BY "likerId"
+  credentials: nova_production
+
+forum_post:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."ForumPost" ORDER BY "userId"
+  credentials: nova_production
+  
+student:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."Student" ORDER BY id
+  credentials: nova_production
+
+user_forum_reaction:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."UserForumReaction" ORDER BY "userId"
+  credentials: nova_production
+
