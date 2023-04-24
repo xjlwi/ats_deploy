@@ -8,6 +8,26 @@ challenge_like:
   sql: SELECT * FROM "public"."ChallengeLike" ORDER BY "likerId"
   credentials: nova_production
 
+course_review:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."CourseReview" ORDER BY "courseId"
+  credentials: nova_production
+
+enrolled_checkpoint:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."EnrolledCheckpoint" ORDER BY "enrolledStudentId"
+  credentials: nova_production
+
+enrolled_course:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."EnrolledCourse" ORDER BY "studentId"
+  credentials: nova_production
+
+explog:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."ExpLog" ORDER BY "studentId" LIMIT 500
+  credentials: nova_production
+
 forum_post:
   type: pandas.SQLQueryDataSet
   sql: SELECT * FROM "public"."ForumPost" ORDER BY "userId"
