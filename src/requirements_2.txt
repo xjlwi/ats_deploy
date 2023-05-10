@@ -1,0 +1,8 @@
+pandas
+numpy
+streamlit
+plotly
+psycopg2
+kedro-mlflow
+s3fs
+mlflow
