@@ -43,3 +43,12 @@ user_forum_reaction:
   sql: SELECT * FROM "public"."UserForumReaction" ORDER BY "userId"
   credentials: nova_production
 
+team:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."Team" ORDER BY "updatedAt"
+  credentials: nova_production
+
+user:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."User" ORDER BY "updatedAt"
+  credentials: nova_production

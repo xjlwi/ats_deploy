@@ -40,7 +40,7 @@ loggers:
   kedro:
     level: INFO
 
-  nova:
+  analytics:
     level: INFO
 
 root:
