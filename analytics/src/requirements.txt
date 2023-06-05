@@ -1,0 +1,53 @@
+black~=22.0
+boto3
+colour
+dalex
+dataclasses==0.6
+dtale==2.13.0
+evidently==0.2.0
+flake8>=3.7.9, <4.0
+great-expectations==0.15.22
+imblearn
+ipython>=7.31.1, <8.0
+isort~=5.0
+jupyter~=1.0
+jupyterlab~=3.0
+kedro==0.18.4
+kedro-mlflow==0.11.3
+kedro-telemetry==0.2.1
+kedro-viz==5.3.0
+kedro[kedro_mlflow.io.artifacts.MlflowArtifactDataSet]
+kedro[pandas.SQLQueryDataSet]
+kedro[yaml]
+lightgbm==3.2.0
+linear-tree==0.3.5
+matplotlib
+mlflow==1.28.0
+nbstripout~=0.4
+numpy
+openpyxl
+optuna
+pandas
+pandas_ta==0.3.14b0
+path
+plotly
+pmdarima
+protobuf==3.19.1
+psycopg2
+pyjanitor==0.22.0
+pytest-cov~=3.0
+pytest-mock>=1.7.1, <2.0
+pytest~=6.2
+# regex
+# scikit-learn==1.1.2
+seaborn
+#stable-baselines3
+# statsmodels
+streamlit==1.13.0
+# tensorflow
+termcolor
+# tsfresh==0.17.0
+xgboost==1.5.2
+yellowbrick
+# dash>=0.43.0
+# gunicorn>=19.9.0
