@@ -162,3 +162,4 @@ venv.bak/
 *.jpg
 *.ipynb
 docs/**
+!notebooks/check_team.ipynb
