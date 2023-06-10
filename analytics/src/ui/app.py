@@ -23,7 +23,7 @@ from layout import (
     update_cards,
 )
 
-app = dash.Dash(__name__, title='Novalearn Internal Dashboard 🍣', external_stylesheets=[dbc.themes.DARKLY])
+app = dash.Dash(__name__, title='Novalearn Internal Dashboard 🍣', external_stylesheets=[dbc.themes.FLATLY, "assets/custom.css"])
 app.config["suppress_callback_exceptions"] = True
 
 server = app.server
@@ -31,6 +31,7 @@ server = app.server
 # Load data
 df = pd.read_csv('https://plotly.github.io/datasets/country_indicators.csv')
 
+# CSS styles
 
 
 app.layout =  dbc.Container([
