@@ -4,9 +4,10 @@ import dash_bootstrap_components as dbc
 
 import os
 import pandas as pd
+from plotly import graph_objects as go
 from pathlib import Path
 dir = Path(__file__).parent
-# print (os.getcwd())
+print (os.getcwd())
 data_dir = os.path.join(os.getcwd(),'data/01_raw/ui/')
 # os.chdir(dir)
 #
@@ -14,6 +15,7 @@ Notion_db_content = 'https://www.notion.so/novalearn/b194bb2c04b1444084d1c3610d8
 n_signups = 44
 sales_revenue = '$ 3000'
 profit_ytd_val = '$ 80000'
+weekly_rev = '$ 540'
 #################################################################
 #                   DATA LOADING                                #
 #################################################################
@@ -32,9 +34,42 @@ profit_ytd_val = '$ 80000'
 def update_cards(Categoryoutput=None):
     Category = Categoryoutput
     print (Category)
+
+    # Create the dbc.Graph figure for the second column
+    # Calculate the combined height of the three cards in the first column
+    card_height = "100px"  # Adjust this value based on the desired height of each card
+    combined_height = f"calc(3 * ({card_height} -30px))"  # 30px for card margins and padding
+    layout = go.Layout(
+            margin=go.layout.Margin(
+                    l=10, #left margin
+                    r=15, #right margin
+                    b=19, #bottom margin
+                    t=30  #top margin
+                ),
+            title = 'Sample number of view by month revenue',
+            xaxis=dict(
+                    showline=True,
+                    linewidth=1,
+                    linecolor='black'
+                ),
+            yaxis=dict(
+                showline=True,
+                linewidth=1,
+                linecolor='black'
+            ),
+            plot_bgcolor='white',
+            )
+    dara = [go.Scatter(x=['Jan', 'Feb', 'Mar'], y=[4, 1, 2], mode='lines')]
+    fig = dict(data=dara, layout=layout)
+    
+    # Create the dbc.Graph figure for the second column
+    graph = dcc.Graph(
+        figure=fig,
+        style={'height': "200px", }
+    )
     if Category == 'Sales':
         # dynamic Card Content
-        new_signups = [
+        new_signups = dbc.Card([
             # dbc.CardHeader(f"{Category.upper()}"),
             dbc.CardBody([
                 html.H5("New Signups", className="card-title", 
@@ -48,10 +83,10 @@ def update_cards(Categoryoutput=None):
                 ),
             ],
             id = "new_signups")
-        ]
+        ], color = '#abdbe3', outline=True)
 
         # dynamic Sales
-        new_sales = [
+        new_sales = dbc.Card([
             # dbc.CardHeader(f"{Category.upper()}"),
             dbc.CardBody([
                 html.H5("New Sales Revenue", className="card-title",
@@ -65,10 +100,10 @@ def update_cards(Categoryoutput=None):
                 ),
             ],
             id = "new_sales_revenue")
-        ]
+        ], color = '#abdbe3', outline=True)
 
         # dynamic Sales
-        profit_ytd = [
+        profit_ytd = dbc.Card([
                 dbc.CardBody([
                 html.H5("Profit YTD ", className="card-title",
                         style={"text-align": "center",  # Set text alignment to center
@@ -81,38 +116,79 @@ def update_cards(Categoryoutput=None):
                 ),
             ],
             id = "proft_ytd")
-        ]
-        row_3 = html.Div(
-                [
-                dbc.Row(
-                    [
-                        dbc.Col(dbc.Card(new_signups, color="#abdbe3", outline=True), width = 4),
+        ], color = '#abdbe3', outline=True)
+
+        # dynamic Sales
+        weekly_revenue = dbc.Card([
+                dbc.CardBody([
+                html.H5("Weekly Revenue ", className="card-title",
+                        style={"text-align": "center",  # Set text alignment to center
+                                "color": "white"} ,),
+                html.P(
+                    f"{weekly_rev}",
+                    style={"text-align": "center",  # Set text alignment to center
+                            "color": "white"} , # Set text alignment to center
+                    className="card-text",
+                ),
+            ],
+            id = "weekly_rev")
+        ], color = '#abdbe3', outline=True)
+
+        row_3 = dbc.Container([
+                    dbc.Row([
+                        dbc.Col([
+                            dbc.Row([new_signups], className = "m-2"), 
+                            dbc.Row([profit_ytd], className = "m-2"),
+                            dbc.Row([new_sales], className = "m-2"),
+                        ], 
+                            width = 4),
+                        # html.Div(style={'border-left': '5px solid #efededa1', 'height': '100%'}, className='verticalline'),
+                        # dbc.Col([], width=1) #insert space,
+                        dbc.Col([
+                            dbc.Row([weekly_revenue],  className="m-2",), 
+                            dbc.Row([graph],  style={'padding': '0'}), 
+                                ],
+                                width = 7),
+                        # html.Hr(), html.Div(className="verticalline")
+                        
+                        # dbc.Col([], width=3),
                     ]
                 ),
-                dbc.Row(
-                    [
-                        dbc.Col(html.Hr(), width = 4),
-                    ],
-                    id='HorizontalLine'
-                ),
-                dbc.Row(
-                    [
-                    dbc.Col(dbc.Card(new_sales, color="#abdbe3", outline=True), width = 4),
-                    ]
-                ),
-                dbc.Row(
-                    [
-                        dbc.Col(html.Hr(), width = 4),
-                    ],
-                    id='HorizontalLine'
-                ),
-                dbc.Row(
-                    [
-                    dbc.Col(dbc.Card(profit_ytd, color="#abdbe3", outline=True), width = 4),
-                    ],
+                # html.Div(
+                #     id='chart-container',
+                #     style={'padding': '0'}
+                # ),
+                html.Link(
+                    rel='stylesheet',
+                    href='/assets/custom.css'
+                )
+                # dbc.Row(
+                #     [
+                #         dbc.Col(html.Hr(), width = 4),
+                #         dbc.Col(html.Div(className="verticalline"), width=6),
+                #     ],
+                #     id='HorizontalLine'
+                # ),
+                # dbc.Row(
+                #     [
+                #         # dbc.Col(dbc.Card(new_sales, color="#abdbe3", outline=True), width = 4),
+                #         dbc.Col(html.Div(className="verticalline"), width=6),
+                #     ]
+                # ),
+                # dbc.Row(
+                #     [
+                #         dbc.Col(html.Hr(), width = 4),
+                #         dbc.Col(html.Div(className="verticalline"), width=6),
+                #     ],
+                #     id='HorizontalLine'
+                # ),
+                # dbc.Row(
+                #     [
+                #         # dbc.Col(dbc.Card(profit_ytd, color="#abdbe3", outline=True), width = 4),
+                #         dbc.Col(html.Div(className="verticalline"), width=6),
+                #     ],
                     
-                ),
-                html.Div(className="vertical-line"),
+                # ),
                 ],
                 id='CardRow'
         )

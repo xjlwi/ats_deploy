@@ -29,7 +29,7 @@ app.config["suppress_callback_exceptions"] = True
 server = app.server
 
 # Load data
-df = pd.read_csv('https://plotly.github.io/datasets/country_indicators.csv')
+# df = pd.read_csv('https://plotly.github.io/datasets/country_indicators.csv')
 
 # CSS styles
 
