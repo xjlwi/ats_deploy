@@ -17,6 +17,10 @@ n_signups = 44
 sales_revenue = '$ 3000'
 profit_ytd_val = '$ 80000'
 weekly_rev = '$ 540'
+
+avg_revenue_per_course = '$ 20'
+number_of_active_users = '60'
+number_of_events_ytd = 10
 #################################################################
 #                   DATA LOADING                                #
 #################################################################
@@ -64,7 +68,7 @@ def create_radial_component(planned_profit, target_profit):
         style={'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}
     )
 
-
+# Reference the Category, Return the Sales Page 3 rows of layout.
 def update_cards(Categoryoutput=None):
     Category = Categoryoutput
     print (Category)
@@ -198,14 +202,9 @@ def update_cards(Categoryoutput=None):
                         # dbc.Col([], width=3),
                     ]
                 ),
-                # html.Div(
-                #     id='chart-container',
-                #     style={'padding': '0'}
-                # ),
-                html.Link(
-                    rel='stylesheet',
-                    href='/assets/custom.css'
-                )
+                ],
+                id='CardRow'
+        )
                 # dbc.Row(
                 #     [
                 #         dbc.Col(html.Hr(), width = 4),
@@ -233,9 +232,7 @@ def update_cards(Categoryoutput=None):
                 #     ],
                     
                 # ),
-                ],
-                id='CardRow'
-        )
+                
         
         return row_3
     else: # DEFAULT CARDS
@@ -293,25 +290,39 @@ def update_cards(Categoryoutput=None):
         return row_3
 
 
-# select_menu = dbc.Row(
-#     [
-#         html.Div([
-#                 html.Div([
-#                     dcc.Dropdown(
-#                     options = [ {"label": "Operations", "value": "Operations"},
-#                                 {"label": "Events", "value": "Events"},
-#                                 {"label": "Product", "value": "Product"},
-#                                 {"label": "Creative & Courses", "value": "Creative & Courses"},
-#                                 {"label": "Marketing", "value": "Marketing"},
-#                                 {"label": "Sales", "value": "Sales"},], 
-#                     id='Category',         
-#                     style={ 'textAlign':'center'} )
-#                 ])
-#             ],
-#                 ) #style={'width': '40%', 'float': 'right', 'display': 'inline-block'}
-#     ]
-# )
-    
+events = dbc.Container([
+                dbc.Row([
+                    ## Upcoming events
+                    dbc.Col([
+                        html.Br(),
+                        dbc.DropdownMenu(
+                                [
+                                    dbc.DropdownMenuItem("Upcoming Event 1"),
+                                    dbc.DropdownMenuItem("Upcoming Event 2"),
+                                    dbc.DropdownMenuItem("Upcoming Event 3"),
+                                ],
+                                label="Upcoming Events",
+                            )
+                    ],
+                    width={"size": 3, "offset": 1},  
+                    ),
+                    ## Ongoing events
+                    dbc.Col([
+                        html.Br(),
+                        dbc.DropdownMenu(
+                                [
+                                    dbc.DropdownMenuItem("Ongoing Event 1"),
+                                    dbc.DropdownMenuItem("Ongoing Event 2"),
+                                    dbc.DropdownMenuItem("Ongoing Event 3"),
+                                ],
+                                label="Ongoing Events",
+                            )
+                        ],
+                        width={"size": 3, "offset": 3},  
+                    ),
+                ])
+],id='emptyRow')
+
 select_menu = html.Div(
     [
         dbc.Card(
@@ -337,10 +348,12 @@ select_menu = html.Div(
                                     ),
                                     width=10
                                 ),
-                            ]
+                            ],
+                            class_name = 'm-2'
                         ),
                         # html.Hr(),  # horizontal line
                         html.Div(id="Categoryoutput"),
+                        html.Br()
                     ]
                 ),
             ]
@@ -362,94 +375,158 @@ product_menu = dbc.Row([
         style={'width': '50%', 'display': 'inline-block'}),
 ])
 
-
+# Create the function to return the html layout contents
 row_3 = update_cards()
 
-# List of ongoing Events
-    ### UPCOMING EVENTS ###
-events= dbc.Row(
-            [   
-                ## Upcoming events
-                dbc.Col(
-                    [
-                        dbc.DropdownMenu(
-                            [
-                                dbc.DropdownMenuItem("Upcoming Event 1"),
-                                dbc.DropdownMenuItem("Upcoming Event 2"),
-                                dbc.DropdownMenuItem("Upcoming Event 3"),
-                            ],
-                            label="Upcoming Events",
-                        )
-                    ],
-                    width=6,  # Adjust the width of the column as needed
-                ),
-                ## Ongoing events
-                dbc.Col(
-                    [
-                        dbc.DropdownMenu(
-                            [
-                                dbc.DropdownMenuItem("Ongoing Event 1"),
-                                dbc.DropdownMenuItem("Ongoing Event 2"),
-                                dbc.DropdownMenuItem("Ongoing Event 3"),
-                            ],
-                            label="Ongoing Events",
-                        )
-                    ],
-                    width=6,  # Adjust the width of the column as needed
-                ),
-            ]
 
-            
+
+########################################################
+#              COMPONENTS OPERATIONS BOTTOM            #
+########################################################
+layout = go.Layout(
+            margin=go.layout.Margin(
+                    l=10, #left margin
+                    r=15, #right margin
+                    b=19, #bottom margin
+                    t=30  #top margin
+                ),
+            title = 'Area Line Chart',
+            xaxis=dict(
+                    showline=True,
+                    linewidth=1,
+                    linecolor='black'
+                ),
+            yaxis=dict(
+                showline=True,
+                linewidth=1,
+                linecolor='black'
+            ),
+            plot_bgcolor='white',
+            )
+temp = go.Figure(data=[
+    go.Scatter(
+        x=[1, 2, 3, 4, 5],
+        y=[3, 2, 4, 1, 2],
+        fill="tozeroy",
+        mode="lines",
+        marker=dict(color="#abd9e3", line=dict(color="#abdbe3")),
+        fillcolor="#abdbe3",  # Set the fill color
         )
+    ],
+    layout=layout
+)
+# Create the dbc.Graph figure for the second column
+graph = dcc.Graph(
+    figure=temp,
+    style={'height': "100px", }
+)
 
+def get_target_revenue():
+    # 3 rows, 2 columns. Each row: Card LHS || Area Chart RHS
 
-    ### ONGOING EVENTS ###
-#     dbc.DropdownMenu(
-#         [
-#             dbc.DropdownMenuItem(
-#             dbc.Row(
-#                 [
-#                 dbc.Col(
-#                     [
-#                         html.Ul(
-#                             [
-#                                 html.Li("Ongoing A"),
-#                                 html.Li("Ongoing B"),
-#                                 html.Li("Ongoing C"),
-#                             ]
-#                         ),
-#                     ],
-#                     width=6,  # Adjust the width of the column as needed
-#                     ),
-#                 ]
-#                 )
-#             ),
-#         ],
-#         label="ONGOING EVENTS",
-#         nav=True,
-#         in_navbar=True,
-#         color='info',
-#     )
-#     ],
-#     fluid=True,
-# )
-                        # dbc.Col(
-                        #     [
-                        #         html.H4("Post-Events"),
-                        #         html.Ul(
-                        #             [
-                        #                 html.Li("Claims"),
-                        #                 html.Li("Post-Event Sales"),
-                        #                 html.Li("Item C"),
-                        #             ]
-                        #         ),
-                        #     ],
-                        #     width=4,  # Adjust the width of the column as needed
-                        #  ),
-                        
-  
+    ## CARDS : 3 samples (avg revenue per course, number of active users, # of events YTD)
+    avg_revenue_card = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                dbc.CardBody([
+                    html.H5("Average Revenue per course $", className="card-title", 
+                            style={"text-align": "center",  # Set text alignment to center
+                                    "color": "white"} ,),
+                    html.P(
+                        f"{avg_revenue_per_course} ",
+                        style={"text-align": "center",
+                                "color": "white"}, # Set text alignment to center
+                        className="card-text",
+                    ),
+                ],
+                id = "new_signups")
+            ], color = '#048245a1', outline=True)
 
-    
+    n_active_card = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                dbc.CardBody([
+                    html.H5("# of Active Users", className="card-title", 
+                            style={"text-align": "center",  # Set text alignment to center
+                                    "color": "white"} ,),
+                    html.P(
+                        f"{str(number_of_active_users)} ",
+                        style={"text-align": "center",
+                                "color": "white"}, # Set text alignment to center
+                        className="card-text",
+                    ),
+                ],
+                id = "new_signups")
+            ], color = '#048245a1', outline=True)
+
+    events_ytd_card = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                dbc.CardBody([
+                    html.H5("# Events YTD", className="card-title", 
+                            style={"text-align": "center",  # Set text alignment to center
+                                    "color": "white"} ,),
+                    html.P(
+                        f"{number_of_events_ytd} ",
+                        style={"text-align": "center",
+                                "color": "white"}, # Set text alignment to center
+                        className="card-text",
+                    ),
+                ],
+                id = "new_signups")
+            ], color = '#048245a1', outline=True)
+
+    ##########################################################
+    #       Chart the 3 rows, LHS Card, RHS Graph            #
+    ##########################################################
+    target_revenue = dbc.Container([
+                        dbc.Row([
+                            dbc.Col([
+                                dbc.Row([avg_revenue_card], 
+                                        className = "m-2", 
+                                        style={'padding': '0'}, ), 
+                                # dbc.Row([graph],  style={'padding': '0'}), 
+                            ], 
+                                width = 4),
+                            dbc.Col([
+                                dbc.Row([graph],  style={'padding': '0'}), 
+                            ],
+                                    width = 8),
+
+                        ]
+                    ),
+
+                    ### SECOND ROW ###
+                    dbc.Row([
+                            dbc.Col([
+                                dbc.Row([n_active_card], className = "m-2", 
+                                        style={'padding': '0'}, ),
+                            ], 
+                                width = 4),
+                            dbc.Col([
+                                dbc.Row([graph],  style={'padding': '0'}), 
+                            ],
+                                width = 8),
+                            ]
+                    ),
+
+                    ### THIRD ROW ###
+                    dbc.Row([
+                            dbc.Col([
+                                dbc.Row([events_ytd_card], class_name = 'm-2', 
+                                        style={'padding': '0'}, ),
+                            ], 
+                                width = 4),
+                            dbc.Col([
+                                dbc.Row([graph],  style={'padding': '0'}), 
+                            ],
+                                width = 8),
+                            ]
+                    ),
+                ],
+                    id='targetRevenueRow'
+            )
+
+    return target_revenue
+
+target_revenue = get_target_revenue()
 
 #################################################################
 #                           LAYOUT                              #
@@ -462,6 +539,11 @@ def layout_home():
             select_menu,
             html.Br(),
             row_3,
+            html.Hr(),
+            html.Br(),
+            target_revenue,
+            html.Hr(),
+
             # select_menu,
         ]
     )
@@ -470,11 +552,10 @@ def layout_operation():
     return html.Div(
         children=[
             html.H1("👩🏻‍💼 Operation Page"),
-            html.P("Welcome to the Novalearn Operations Page!"),
-            row_3,
+            html.P("Welcome to the Novalearn Operations Page!", style={'textAlign':'center'}),
             html.Br(),
-            select_menu,
-
+            events,
+            target_revenue,
             ## LIST OF PROGRAMS ##
             # html.Div([
             #     html.H4("Upcoming Events"),
@@ -484,7 +565,6 @@ def layout_operation():
             #          html.P("ASA ISNS"),
             #     ]),
             # ]),
-            events,
         ]
             
     )
