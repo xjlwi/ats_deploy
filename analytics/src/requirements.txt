@@ -2,6 +2,7 @@ black~=22.0
 boto3
 colour
 dalex
+dash_dangerously_set_inner_html
 dataclasses==0.6
 dtale==2.13.0
 evidently==0.2.0
@@ -38,16 +39,9 @@ pyjanitor==0.22.0
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
 pytest~=6.2
-# regex
-# scikit-learn==1.1.2
 seaborn
-#stable-baselines3
-# statsmodels
 streamlit==1.13.0
-# tensorflow
 termcolor
-# tsfresh==0.17.0
 xgboost==1.5.2
 yellowbrick
-# dash>=0.43.0
-# gunicorn>=19.9.0
+dash>=0.43.0
