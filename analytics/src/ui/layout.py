@@ -1,8 +1,9 @@
 import dash
 from dash import dcc, html, Input, Output
 import dash_bootstrap_components as dbc
+import dash_dangerously_set_inner_html
 
-import os
+import os, math
 import pandas as pd
 from plotly import graph_objects as go
 from pathlib import Path
@@ -30,15 +31,45 @@ weekly_rev = '$ 540'
 #################################################################
 #                   COMPONENETS                                 #
 #################################################################
+# Radial shape components
+
+def create_radial_component(planned_profit, target_profit):
+    # Calculate the percentage of planned profit achieved
+    percentage = (planned_profit / target_profit) * 100
+    
+    # Set the color of the radial shape based on the achievement percentage
+    color = 'green' if percentage >= 100 else 'red'
+    met = 'met' if percentage >= 100 else 'not met'
+    # Calculate the circumference of the circle
+    circumference = 2 * math.pi * 90
+    
+    # Calculate the dash length for the progress circle
+    dash_length = (circumference / 100) * percentage
+    
+    # Create the inner HTML for the radial shape
+    inner_html = f'''
+        <svg height="200" width="200">
+          <circle cx="100" cy="100" r="90" fill="#ffffff" stroke-width="10" stroke="#eaeaea" />
+          <circle cx="100" cy="100" r="90" fill="transparent" stroke-width="10" stroke="{color}"
+            stroke-dasharray="{dash_length},{circumference}" transform="rotate(-90 100 100)"/>
+          <text x="50%" y="40%" text-anchor="middle" dominant-baseline="central" font-size="24">{percentage}%</text>
+          <text x="50%" y="60%" text-anchor="middle" dominant-baseline="central" font-size="16">Target {met}</text>
+        </svg>
+    '''
+    
+    # Return the Dash component
+    return html.Div([
+        dash_dangerously_set_inner_html.DangerouslySetInnerHTML(inner_html),
+    ],
+        style={'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}
+    )
+
 
 def update_cards(Categoryoutput=None):
     Category = Categoryoutput
     print (Category)
 
     # Create the dbc.Graph figure for the second column
-    # Calculate the combined height of the three cards in the first column
-    card_height = "100px"  # Adjust this value based on the desired height of each card
-    combined_height = f"calc(3 * ({card_height} -30px))"  # 30px for card margins and padding
     layout = go.Layout(
             margin=go.layout.Margin(
                     l=10, #left margin
@@ -62,11 +93,19 @@ def update_cards(Categoryoutput=None):
     dara = [go.Scatter(x=['Jan', 'Feb', 'Mar'], y=[4, 1, 2], mode='lines')]
     fig = dict(data=dara, layout=layout)
     
+    
     # Create the dbc.Graph figure for the second column
     graph = dcc.Graph(
         figure=fig,
         style={'height': "200px", }
     )
+
+    # Create the dbc.Graph figure for the html Radial chart
+    planned_vs_kpi = html.Div([
+        create_radial_component(2_000, 10_000)
+    ])
+
+    ## 
     if Category == 'Sales':
         # dynamic Card Content
         new_signups = dbc.Card([
@@ -148,7 +187,12 @@ def update_cards(Categoryoutput=None):
                             dbc.Row([weekly_revenue],  className="m-2",), 
                             dbc.Row([graph],  style={'padding': '0'}), 
                                 ],
-                                width = 7),
+                                width = 4),
+
+                        dbc.Col([
+                            dbc.Row([planned_vs_kpi], class_name = 'm-2',)
+                        ],
+                        width= 4),
                         # html.Hr(), html.Div(className="verticalline")
                         
                         # dbc.Col([], width=3),
@@ -295,7 +339,7 @@ select_menu = html.Div(
                                 ),
                             ]
                         ),
-                        html.Hr(),  # horizontal line
+                        # html.Hr(),  # horizontal line
                         html.Div(id="Categoryoutput"),
                     ]
                 ),
