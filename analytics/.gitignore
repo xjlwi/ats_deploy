@@ -163,3 +163,4 @@ venv.bak/
 *.ipynb
 docs/**
 !notebooks/check_team.ipynb
+mlruns/**
