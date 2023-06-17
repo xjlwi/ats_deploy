@@ -3,14 +3,29 @@
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
 
+challenge_comment:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."ChallengeComment" ORDER BY "commenterId"
+  credentials: nova_production
+  
 challenge_like:
   type: pandas.SQLQueryDataSet
   sql: SELECT * FROM "public"."ChallengeLike" ORDER BY "likerId"
   credentials: nova_production
 
+checkpoint:
+  type: pandas.SQLQueryDataSet
+  sql: SELECT * FROM "public"."Checkpoint" ORDER BY id
+  credentials: nova_production
+
 course_review:
   type: pandas.SQLQueryDataSet
   sql: SELECT * FROM "public"."CourseReview" ORDER BY "courseId"
+  credentials: nova_production
+
+database_datatypes:
+  type: pandas.SQLQueryDataSet #table_schema, table_name,WHERE table_type = 'BASE TABLE'
+  sql: "SELECT * FROM information_schema.tables ORDER BY table_schema, table_name"
   credentials: nova_production
 
 enrolled_checkpoint:
