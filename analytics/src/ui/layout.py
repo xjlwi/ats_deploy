@@ -21,6 +21,10 @@ weekly_rev = '$ 540'
 avg_revenue_per_course = '$ 20'
 number_of_active_users = '60'
 number_of_events_ytd = 10
+
+opex_value = '$20 000'
+capex_value = '$5 000'
+
 #################################################################
 #                   DATA LOADING                                #
 #################################################################
@@ -71,14 +75,15 @@ def create_radial_component(planned_profit, target_profit):
 # Reference the Category, Return the Sales Page 3 rows of layout.
 def update_cards(Categoryoutput=None):
     Category = Categoryoutput
+    Category = 'Sales' # Set to default for now.
     print (Category)
 
     # Create the dbc.Graph figure for the second column
     layout = go.Layout(
             margin=go.layout.Margin(
-                    l=10, #left margin
-                    r=15, #right margin
-                    b=19, #bottom margin
+                    l=20, #left margin
+                    r=30, #right margin
+                    b=30, #bottom margin
                     t=30  #top margin
                 ),
             title = 'Sample number of view by month revenue',
@@ -93,7 +98,10 @@ def update_cards(Categoryoutput=None):
                 linecolor='black'
             ),
             plot_bgcolor='white',
-            )
+            font=dict(
+                size=9,
+            ),
+    )
     dara = [go.Scatter(x=['Jan', 'Feb', 'Mar'], y=[4, 1, 2], mode='lines')]
     fig = dict(data=dara, layout=layout)
     
@@ -112,6 +120,38 @@ def update_cards(Categoryoutput=None):
     ## 
     if Category == 'Sales':
         # dynamic Card Content
+        opex_card = dbc.Card([
+            # dbc.CardHeader(f"{Category.upper()}"),
+            dbc.CardBody([
+                html.H5("OPEX", className="card-title", 
+                        style={"text-align": "center",  # Set text alignment to center
+                                "color": "white"} ,),
+                html.P(
+                    f"{opex_value} ",
+                    style={"text-align": "center",
+                            "color": "white"}, # Set text alignment to center
+                    className="card-text",
+                ),
+            ],
+            id = "opex_cards")
+        ], color = '#abdbe3', outline=True)
+
+        capex_card = dbc.Card([
+            # dbc.CardHeader(f"{Category.upper()}"),
+            dbc.CardBody([
+                html.H5("CAPEX", className="card-title", 
+                        style={"text-align": "center",  # Set text alignment to center
+                                "color": "white"} ,),
+                html.P(
+                    f"{capex_value} ",
+                    style={"text-align": "center",
+                            "color": "white"}, # Set text alignment to center
+                    className="card-text",
+                ),
+            ],
+            id = "capex_cards")
+        ], color = '#abdbe3', outline=True)
+
         new_signups = dbc.Card([
             # dbc.CardHeader(f"{Category.upper()}"),
             dbc.CardBody([
@@ -180,7 +220,8 @@ def update_cards(Categoryoutput=None):
         row_3 = dbc.Container([
                     dbc.Row([
                         dbc.Col([
-                            dbc.Row([new_signups], className = "m-2"), 
+                            dbc.Row([opex_card], className="m-2"),
+                            dbc.Row([weekly_revenue],  className="m-2",), 
                             dbc.Row([profit_ytd], className = "m-2"),
                             dbc.Row([new_sales], className = "m-2"),
                         ], 
@@ -188,7 +229,8 @@ def update_cards(Categoryoutput=None):
                         # html.Div(style={'border-left': '5px solid #efededa1', 'height': '100%'}, className='verticalline'),
                         # dbc.Col([], width=1) #insert space,
                         dbc.Col([
-                            dbc.Row([weekly_revenue],  className="m-2",), 
+                            dbc.Row([capex_card], className="m-1"),
+                            dbc.Row([new_signups], className = "m-2"), 
                             dbc.Row([graph],  style={'padding': '0'}), 
                                 ],
                                 width = 4),
@@ -535,8 +577,8 @@ def layout_home():
     return html.Div(
         children=[
             # html.H1("Home Page"),
-            html.P("Welcome to the Home Page!"),
-            select_menu,
+            # html.P("Welcome to the Home Page!"),
+            # select_menu,
             html.Br(),
             row_3,
             html.Hr(),
