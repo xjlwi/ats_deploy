@@ -17,6 +17,13 @@
 
 }
 
+.sales-card {
+    color: #6ec5d4;
+    outline: True;
+    text-align: left;
+    background-color: #6ec5d4;
+}
+
 .card-text-header1 {
     color: #717070;
     font-size: 30px;
@@ -25,8 +32,9 @@
 
 .card-text-header2 {
     color: #717070;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: bold;
+    justify-content: flex-start;
 }
 
 .card-text-body1 {
@@ -39,6 +47,7 @@
 .card-text-body2 {
     color: #fffbfb;
     font-size: 20px;
-    letter-spacing: 2.5px; /* Adjust the spacing between characters */
-    font-weight: bold;
+    letter-spacing: 2px; /* Adjust the spacing between characters */
+    /* font-weight: bold; */
+    text-align: center;
 }

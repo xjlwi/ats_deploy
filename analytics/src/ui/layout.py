@@ -14,8 +14,8 @@ data_dir = os.path.join(os.getcwd(),'data/01_raw/ui/')
 #
 Notion_db_content = 'https://www.notion.so/novalearn/b194bb2c04b1444084d1c3610d8bc672?v=0a63faf0c5074a9d9240e5a7f9c7a869&pvs=4'
 n_signups = 44
-sales_revenue = '$ 3000'
-profit_ytd_val = '$ 80000'
+b2b_sales = '$ 3000'
+b2c_sales = '$ 800'
 weekly_rev = '$ 540'
 
 avg_revenue_per_course = '$ 20'
@@ -293,7 +293,7 @@ def update_cards(Categoryoutput=None):
                         #         "color": "white"} ,),
                     ),
                 html.P(
-                    f"{sales_revenue}",
+                    f"{b2b_sales}",
                     # style={"text-align": "center",  # Set text alignment to center
                     #         "color": "white"} ,  # Set font color to white # Set text alignment to center
                     className="card-text-body2",
@@ -305,12 +305,12 @@ def update_cards(Categoryoutput=None):
         # dynamic Sales
         profit_ytd = dbc.Card([
                 dbc.CardBody([
-                html.H5("Profit YTD ", className="card-text-header2",
+                html.H5("B2C Sales ", className="card-text-header2",
                         # style={"text-align": "center",  # Set text alignment to center
                         #         "color": "white"} ,
                 ),
                 html.P(
-                    f"{profit_ytd_val}",
+                    f"{b2c_sales}",
                     # style={"text-align": "center",  # Set text alignment to center
                     #         "color": "white"} , # Set text alignment to center
                     className="card-text-body2",
@@ -585,55 +585,62 @@ def get_target_revenue():
     avg_revenue_card = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
                 dbc.CardBody([
-                    html.H5("Average Revenue per course $", className="card-title", 
-                            style={"text-align": "center",  # Set text alignment to center
-                                    "color": "white"} ,),
+                    html.H5("Average Revenue / course $", className="card-text-header2"), 
                     html.P(
                         f"{avg_revenue_per_course} ",
-                        style={"text-align": "center",
-                                "color": "white"}, # Set text alignment to center
-                        className="card-text",
+                        # style={"text-align": "center",
+                        #         "color": "white"}, # Set text alignment to center
+                        className="card-text-body2",
                     ),
                 ],
                 id = "new_signups")
-            ], color = '#0100245a1', outline=True)
+            ], className="sales-card")
 
     n_active_card = dbc.Card([
-                # dbc.CardHeader(f"{Category.upper()}"),
                 dbc.CardBody([
-                    html.H5("# of Active Users", className="card-text-header ", 
-                            style={"text-align": "center",  # Set text alignment to center
-                                    "color": "white"} ,),
+                    html.H5("# of Active Users", className="card-text-header2"), 
+                            # style={"text-align": "center",  # Set text alignment to center
+                            #         "color": "white"} ,),
                     html.P(
                         f"{str(number_of_active_users)} ",
-                        style={"text-align": "center",
-                                "color": "white"}, # Set text alignment to center
-                        className="card-text",
+                        # style={"text-align": "center",
+                        #         "color": "white"}, # Set text alignment to center
+                        className="card-text-body2",
                     ),
                 ],
                 id = "new_signups")
-            ], color = '#0100245a1', outline=True)
+            ], className="sales-card")
 
     events_ytd_card = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
                 dbc.CardBody([
-                    html.H5("# Events YTD", className="card-text-header ", 
-                            style={"text-align": "center",  # Set text alignment to center
-                                    "color": "white"} ,),
+                    html.H5("# Events YTD", className="card-text-header2"), 
+                            # style={"text-align": "center",  # Set text alignment to center
+                            #         "color": "white"} ,),
                     html.P(
                         f"{number_of_events_ytd} ",
-                        style={"text-align": "center",
-                                "color": "white"}, # Set text alignment to center
-                        className="card-text",
+                        # style={"text-align": "center",
+                        #         "color": "white"}, # Set text alignment to center
+                        className="card-text-body2",
                     ),
                 ],
                 id = "new_signups")
-            ], color = '#0100245a1', outline=True)
+            ], className="sales-card")
 
     ##########################################################
     #       Chart the 3 rows, LHS Card, RHS Graph            #
     ##########################################################
     target_revenue = dbc.Container([
+                        ### HEADER ROW ###
+                        dbc.Row(
+                            dbc.Col(
+                                    html.H2("Sales by Business"),
+                                    width={"size": 12, "align":'stretch',},
+                            ),
+                            justify='center',
+                        ),
+
+                        ### FIRST ROW ###
                         dbc.Row([
                             dbc.Col([
                                 dbc.Row([avg_revenue_card], 
