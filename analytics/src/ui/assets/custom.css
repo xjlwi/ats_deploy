@@ -1,5 +1,24 @@
 .verticalline {
     border-left: 5px solid #efededa1; /* Change color and thickness as needed */
     height: 100%; /* Adjust the height of the vertical line */
-    margin: 10px; /*Adjust the spacing around the vertical line
+    margin: 10px; /*Adjust the spacing around the vertical line */
+}
+
+.rounded-img {
+    border: 2px solid #7c7a7a;
+    border-radius: 80%;
+}
+
+.capex-card {
+    color: #abdbe3;
+    outline: True;
+    text-align: center;
+    background-color: #abdbe3;
+
+}
+
+.card-text-header {
+    color: #717070;
+    font-size: 30px;
+    font-weight: bold;
 }
