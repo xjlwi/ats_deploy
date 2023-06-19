@@ -72,6 +72,146 @@ def create_radial_component(planned_profit, target_profit):
         style={'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}
     )
 
+def create_opex_card():
+   opex_card =  dbc.Card(
+    dbc.CardBody(
+        [
+            # First row
+            dbc.Row(
+            # style={"backgroundColor": "#f4d484a1", "borderRadius": "8px", "padding": "16px"},
+            children=[
+                dbc.Col(
+                        html.Img(src="assets/Opex.png", className="icon", style={"height": "48px", "width": "48px"}),
+                        width=2
+                        ),
+                dbc.Col(
+                    html.P("Card Value here", className="card-text", style={"color": "#999999", "fontSize": "20px", "fontWeight": "bold"}),
+                    width=10
+                ),
+            ], 
+            align = "center"
+            ),
+            
+            # Second row
+            dbc.Row(
+                [
+                    html.Div(className="opex-cost", style={"marginLeft": "auto"}, 
+                             children= [
+                                        html.P("OPEX HKD", style={"color": "#f4d484a1", "fontSize": "14px"})
+                                    ],
+                ),
+                ]
+            ),
+        ]
+    ),          
+    className="OpexCard",
+    )
+
+   capex_card = dbc.Card(
+        dbc.CardBody(
+        [
+            # First row
+            dbc.Row(
+            # style={"backgroundColor": "#f4d484a1", "borderRadius": "8px", "padding": "16px"},
+            children=[
+                dbc.Col(
+                        html.Img(src="assets/Capex.png", className="icon", style={"height": "48px", "width": "48px"}),
+                        width=2
+                        ),
+                dbc.Col(
+                    html.P("Card Value here", className="card-text", style={"color": "#999999", "fontSize": "20px", "fontWeight": "bold"}),
+                    width=10
+                ),
+            ], 
+            align = "left"
+            ),
+            
+            # Second row
+            dbc.Row(
+                [
+                    html.Div(className="capex-cost", style={"marginLeft": "auto"}, 
+                             children= [
+                                        html.P("CAPEX HKD", style={"color": "#f4d484a1", "fontSize": "14px"})
+                                    ],
+                ),
+                ]
+            ),
+        ]
+    ),          
+    className="CapexCard",
+    )
+
+    ## Structure layout of cards
+   CARDS = dbc.Container([
+                    dbc.Row([
+                        dbc.Col([
+                            dbc.Row([capex_card],  className="m-2",), 
+                            ], 
+                            width = 6),
+                        dbc.Col([
+                            dbc.Row([opex_card], className="m-2"),
+                                ],
+                                width = 6),
+                            ]),
+                        ],
+                id='opex_capex_row'
+        )
+   
+   return CARDS
+
+# Opex + Capex
+def get_opex_capex():
+     
+    opex_card = dbc.Card([
+            # dbc.CardHeader(f"{Category.upper()}"),
+            dbc.CardBody([
+                html.H3("OPEX", className="card-title", 
+                        style={"text-align": "center",  # Set text alignment to center
+                                "color": "white"} ,),
+                html.P(
+                    f"{opex_value} ",
+                    style={"text-align": "center",
+                            "color": "white"}, # Set text alignment to center
+                    className="card-text",
+                ),
+            ],
+            id = "opex_cards")
+        ], color = '#73edc6a1', outline=True)
+        # ], color = '#abdbe3', outline=True)
+     
+    capex_card = dbc.Card([
+        # dbc.CardHeader(f"{Category.upper()}"),
+        dbc.CardBody([
+            html.H3("CAPEX", className="card-title", 
+                    style={"text-align": "center",  # Set text alignment to center
+                            "color": "white"} ,),
+            html.P(
+                f"{capex_value} ",
+                style={"text-align": "center",
+                        "color": "white"}, # Set text alignment to center
+                className="card-text",
+            ),
+        ],
+        id = "capex_cards")
+        ], color = '#73edc6a1', outline=True)
+    
+    opex_capex_outline = dbc.Container([
+                    dbc.Row([
+                        dbc.Col([
+                            dbc.Row([opex_card], className="m-2"),
+                            ], 
+                            width = 6),
+                        dbc.Col([
+                            dbc.Row([capex_card],  className="m-2",), 
+                                ],
+                                width = 6),
+                            ]),
+                        ],
+                id='opex_capex_row'
+        )
+    return opex_capex_outline
+
+
 # Reference the Category, Return the Sales Page 3 rows of layout.
 def update_cards(Categoryoutput=None):
     Category = Categoryoutput
@@ -120,37 +260,7 @@ def update_cards(Categoryoutput=None):
     ## 
     if Category == 'Sales':
         # dynamic Card Content
-        opex_card = dbc.Card([
-            # dbc.CardHeader(f"{Category.upper()}"),
-            dbc.CardBody([
-                html.H5("OPEX", className="card-title", 
-                        style={"text-align": "center",  # Set text alignment to center
-                                "color": "white"} ,),
-                html.P(
-                    f"{opex_value} ",
-                    style={"text-align": "center",
-                            "color": "white"}, # Set text alignment to center
-                    className="card-text",
-                ),
-            ],
-            id = "opex_cards")
-        ], color = '#abdbe3', outline=True)
-
-        capex_card = dbc.Card([
-            # dbc.CardHeader(f"{Category.upper()}"),
-            dbc.CardBody([
-                html.H5("CAPEX", className="card-title", 
-                        style={"text-align": "center",  # Set text alignment to center
-                                "color": "white"} ,),
-                html.P(
-                    f"{capex_value} ",
-                    style={"text-align": "center",
-                            "color": "white"}, # Set text alignment to center
-                    className="card-text",
-                ),
-            ],
-            id = "capex_cards")
-        ], color = '#abdbe3', outline=True)
+       
 
         new_signups = dbc.Card([
             # dbc.CardHeader(f"{Category.upper()}"),
@@ -220,7 +330,6 @@ def update_cards(Categoryoutput=None):
         row_3 = dbc.Container([
                     dbc.Row([
                         dbc.Col([
-                            dbc.Row([opex_card], className="m-2"),
                             dbc.Row([weekly_revenue],  className="m-2",), 
                             dbc.Row([profit_ytd], className = "m-2"),
                             dbc.Row([new_sales], className = "m-2"),
@@ -229,7 +338,6 @@ def update_cards(Categoryoutput=None):
                         # html.Div(style={'border-left': '5px solid #efededa1', 'height': '100%'}, className='verticalline'),
                         # dbc.Col([], width=1) #insert space,
                         dbc.Col([
-                            dbc.Row([capex_card], className="m-1"),
                             dbc.Row([new_signups], className = "m-2"), 
                             dbc.Row([graph],  style={'padding': '0'}), 
                                 ],
@@ -419,6 +527,7 @@ product_menu = dbc.Row([
 
 # Create the function to return the html layout contents
 row_3 = update_cards()
+opex_capex = get_opex_capex()
 
 
 
@@ -579,10 +688,16 @@ def layout_home():
             # html.H1("Home Page"),
             # html.P("Welcome to the Home Page!"),
             # select_menu,
+            ### First section ##
+            create_opex_card(),
+            # opex_capex,
             html.Br(),
+            html.Hr(),
+
             row_3,
             html.Hr(),
             html.Br(),
+            # Second section 
             target_revenue,
             html.Hr(),
 
