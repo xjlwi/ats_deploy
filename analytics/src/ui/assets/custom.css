@@ -17,8 +17,28 @@
 
 }
 
-.card-text-header {
+.card-text-header1 {
     color: #717070;
     font-size: 30px;
+    font-weight: bold;
+}
+
+.card-text-header2 {
+    color: #717070;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.card-text-body1 {
+    color: #fffbfb;
+    font-size: 24px;
+    letter-spacing: 2px; /* Adjust the spacing between characters */
+    /* font-weight: bold; */
+}
+
+.card-text-body2 {
+    color: #fffbfb;
+    font-size: 20px;
+    letter-spacing: 2.5px; /* Adjust the spacing between characters */
     font-weight: bold;
 }

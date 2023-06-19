@@ -85,7 +85,7 @@ def create_opex_card():
                         width=4
                         ),
                 dbc.Col(
-                    html.P("80 000", className="card-text-header"),
+                    html.P("80 000", className="card-text-header1"),
                     width=4
                 ),
             ], 
@@ -98,7 +98,7 @@ def create_opex_card():
                     html.Br(),
                     html.Div(className="opex-cost", style={"marginLeft": "auto"}, 
                              children= [
-                                        html.P("OPEX HKD", className='card-text-header',)
+                                        html.P("OPEX HKD", className='card-text-header1',)
                                     ],
                 ),
                 ], 
@@ -121,7 +121,7 @@ def create_opex_card():
                         width=4
                         ),
                 dbc.Col(
-                    html.P("12 000", className="card-text-header"),
+                    html.P("12 000", className="card-text-header1"),
                     width=4
                 ),
             ], 
@@ -133,7 +133,7 @@ def create_opex_card():
                 [
                     html.Div(className="capex-cost", style={"marginLeft": "auto"}, 
                              children= [
-                                        html.P("CAPEX HKD", className='card-text-header')
+                                        html.P("CAPEX HKD", className='card-text-header1')
                                     ],
                 ),
                 ], 
@@ -145,6 +145,8 @@ def create_opex_card():
     )
 
     ## Structure layout of cards
+   
+   # Add a Container object to position the cards
    CARDS = dbc.Container([
                     dbc.Row([
                         dbc.Col([
@@ -268,61 +270,64 @@ def update_cards(Categoryoutput=None):
         new_signups = dbc.Card([
             # dbc.CardHeader(f"{Category.upper()}"),
             dbc.CardBody([
-                html.H5("New Signups", className="card-title", 
-                        style={"text-align": "center",  # Set text alignment to center
-                                "color": "white"} ,),
+                html.H5("New Signups", className="card-text-header2", 
+                        # style={"text-align": "center",  # Set text alignment to center
+                        #         "color": "white"} ,
+                        ),
                 html.P(
                     f"{n_signups} ",
-                    style={"text-align": "center",
-                            "color": "white"}, # Set text alignment to center
-                    className="card-text",
+                    # style={"text-align": "center",
+                    #         "color": "white"}, # Set text alignment to center
+                    className="card-text-body2",
                 ),
             ],
             id = "new_signups")
-        ], color = '#abdbe3', outline=True)
+        ], className="capex-card")
 
         # dynamic Sales
         new_sales = dbc.Card([
             # dbc.CardHeader(f"{Category.upper()}"),
             dbc.CardBody([
-                html.H5("New Sales Revenue", className="card-title",
-                        style={"text-align": "center",  # Set text alignment to center
-                                "color": "white"} ,),
+                html.H5("New Sales Revenue", className="card-text-header2",
+                        # style={"text-align": "center",  # Set text alignment to center
+                        #         "color": "white"} ,),
+                    ),
                 html.P(
                     f"{sales_revenue}",
-                    style={"text-align": "center",  # Set text alignment to center
-                            "color": "white"} ,  # Set font color to white # Set text alignment to center
-                    className="card-text",
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} ,  # Set font color to white # Set text alignment to center
+                    className="card-text-body2",
                 ),
             ],
             id = "new_sales_revenue")
-        ], color = '#abdbe3', outline=True)
+        ], className="capex-card")
 
         # dynamic Sales
         profit_ytd = dbc.Card([
                 dbc.CardBody([
-                html.H5("Profit YTD ", className="card-title",
-                        style={"text-align": "center",  # Set text alignment to center
-                                "color": "white"} ,),
+                html.H5("Profit YTD ", className="card-text-header2",
+                        # style={"text-align": "center",  # Set text alignment to center
+                        #         "color": "white"} ,
+                ),
                 html.P(
                     f"{profit_ytd_val}",
-                    style={"text-align": "center",  # Set text alignment to center
-                            "color": "white"} , # Set text alignment to center
-                    className="card-text",
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} , # Set text alignment to center
+                    className="card-text-body2",
                 ),
             ],
             id = "proft_ytd")
-        ], color = '#abdbe3', outline=True)
+        ], className="capex-card")
 
         # dynamic Sales
         weekly_revenue = dbc.Card([
                 dbc.CardBody([
-                html.H5("B2B Sales", className="card-title-header"),
+                html.H5("B2B Sales", className="card-text-header2"),
                 html.P(
                     f"{weekly_rev}",
-                    style={"text-align": "center",  # Set text alignment to center
-                            "color": "white"} , # Set text alignment to center
-                    className="card-text",
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} , # Set text alignment to center
+                    className="card-text-body2",
                 ),
             ],
             id = "weekly_rev")
@@ -596,7 +601,7 @@ def get_target_revenue():
     n_active_card = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
                 dbc.CardBody([
-                    html.H5("# of Active Users", className="card-title", 
+                    html.H5("# of Active Users", className="card-text-header ", 
                             style={"text-align": "center",  # Set text alignment to center
                                     "color": "white"} ,),
                     html.P(
@@ -612,7 +617,7 @@ def get_target_revenue():
     events_ytd_card = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
                 dbc.CardBody([
-                    html.H5("# Events YTD", className="card-title", 
+                    html.H5("# Events YTD", className="card-text-header ", 
                             style={"text-align": "center",  # Set text alignment to center
                                     "color": "white"} ,),
                     html.P(
