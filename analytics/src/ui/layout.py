@@ -85,8 +85,8 @@ def create_opex_card():
                         width=4
                         ),
                 dbc.Col(
-                    html.P("Card Value here", className="card-text-header"),
-                    width=8
+                    html.P("80 000", className="card-text-header"),
+                    width=4
                 ),
             ], 
             align = "center"
@@ -98,7 +98,7 @@ def create_opex_card():
                     html.Br(),
                     html.Div(className="opex-cost", style={"marginLeft": "auto"}, 
                              children= [
-                                        html.P("OPEX HKD", style={"color": "#121211a1", "fontSize": "14px"})
+                                        html.P("OPEX HKD", className='card-text-header',)
                                     ],
                 ),
                 ], 
@@ -121,8 +121,8 @@ def create_opex_card():
                         width=4
                         ),
                 dbc.Col(
-                    html.P("Card Value here", className="card-text-header"),
-                    width=8
+                    html.P("12 000", className="card-text-header"),
+                    width=4
                 ),
             ], 
             align = "center"
@@ -133,7 +133,7 @@ def create_opex_card():
                 [
                     html.Div(className="capex-cost", style={"marginLeft": "auto"}, 
                              children= [
-                                        html.P("CAPEX HKD", style={"color": "#121211a1", "fontSize": "14px", 'align'})
+                                        html.P("CAPEX HKD", className='card-text-header')
                                     ],
                 ),
                 ], 
