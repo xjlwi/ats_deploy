@@ -47,7 +47,7 @@ app.layout =  dbc.Container([
                 html.A("Product", href="/product", className="nav-link"),
                 html.A("Creative", href="/creative", className="nav-link"),
             ],
-            className="nav"
+            className="navbar"
         ),
         html.Div(id="page-content")
 ], fluid=True)

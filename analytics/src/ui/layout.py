@@ -82,11 +82,11 @@ def create_opex_card():
             children=[
                 dbc.Col(
                         html.Img(src="assets/Opex.png", className="rounded-img", style={"height": "100px", "width": "100px"}),
-                        width=4
+                        width=3, 
                         ),
                 dbc.Col(
                     html.P("80 000", className="card-text-header1"),
-                    width=4
+                    width=6
                 ),
             ], 
             align = "center"
@@ -98,7 +98,7 @@ def create_opex_card():
                     html.Br(),
                     html.Div(className="opex-cost", style={"marginLeft": "auto"}, 
                              children= [
-                                        html.P("OPEX HKD", className='card-text-header1',)
+                                        html.P("OPEX HKD", className='card-text-header2',)
                                     ],
                 ),
                 ], 
@@ -106,7 +106,7 @@ def create_opex_card():
             ),
         ]
     ),          
-    className="capex-card",
+    className="cards-grey",
     )
 
    capex_card = dbc.Card(
@@ -118,11 +118,11 @@ def create_opex_card():
             children=[
                 dbc.Col(
                         html.Img(src="assets/Capex.png", className="rounded-img", style={"height": "100px", "width": "100px"}),
-                        width=4
+                        width=2
                         ),
                 dbc.Col(
                     html.P("12 000", className="card-text-header1"),
-                    width=4
+                    width= 9
                 ),
             ], 
             align = "center"
@@ -133,7 +133,7 @@ def create_opex_card():
                 [
                     html.Div(className="capex-cost", style={"marginLeft": "auto"}, 
                              children= [
-                                        html.P("CAPEX HKD", className='card-text-header1')
+                                        html.P("CAPEX HKD", className='card-text-header2')
                                     ],
                 ),
                 ], 
@@ -141,7 +141,7 @@ def create_opex_card():
             ),
         ]
     ),          
-    className="capex-card",
+    className="cards-grey",
     )
 
     ## Structure layout of cards
@@ -217,6 +217,31 @@ def get_opex_capex():
     return opex_capex_outline
 
 
+# Sidebar
+# Define the sidebar layout
+def create_sidebar():
+    sidebar = html.Div(
+        id='sidebar',
+        children=[
+            # html.H2('Sidebar')
+        
+            html.Button(
+                html.Img(src='assets/sidebar/gauge-chart.png', height='20px', width='20px'),
+                id='btn-layout-1', n_clicks=0
+            ),
+            html.Button(
+                html.Img(src='assets/sidebar/people.png', height='20px', width='20px'),
+                id='btn-layout-2', n_clicks=0
+            ),
+            html.Button(
+                html.Img(src='assets/sidebar/briefcase.png', height='20px', width='20px'),
+                id='btn-layout-3', n_clicks=0
+            )
+        ],
+        className='sidebar'
+    )
+
+    return sidebar
 # Reference the Category, Return the Sales Page 3 rows of layout.
 def update_cards(Categoryoutput=None):
     Category = Categoryoutput
@@ -634,8 +659,8 @@ def get_target_revenue():
                         ### HEADER ROW ###
                         dbc.Row(
                             dbc.Col(
-                                    html.H2("Sales by Business"),
-                                    width={"size": 12, "align":'stretch',},
+                                    html.H2("Sales by Business", className='page-header'),
+                                    # width={"size": 12, "align":'stretch', "color":'#fffbfb'},
                             ),
                             justify='center',
                         ),
@@ -685,7 +710,7 @@ def get_target_revenue():
                             ]
                     ),
                 ],
-                    id='targetRevenueRow'
+                    id='targetRevenueRow', fluid=False
             )
 
     return target_revenue
@@ -696,27 +721,33 @@ target_revenue = get_target_revenue()
 #                           LAYOUT                              #
 #################################################################
 def layout_home():
-    return html.Div(
-        children=[
-            # html.H1("Home Page"),
-            # html.P("Welcome to the Home Page!"),
-            # select_menu,
+    sidebar = create_sidebar()
+    home_layout = html.Div(
+        [
+            sidebar,
+        #     children=[
+        #         # html.H1("Home Page"),
+        #         # html.P("Welcome to the Home Page!"),
+        #         # select_menu,
             ### First section ##
             create_opex_card(),
-            # opex_capex,
-            html.Br(),
+        #         # opex_capex,
+        #         html.Br(),
             html.Hr(),
-
-            row_3,
-            html.Hr(),
-            html.Br(),
-            # Second section 
+            # row_3,
+        #         html.Hr(),
+        #         html.Br(),
+        # Second section 
             target_revenue,
-            html.Hr(),
+        #         html.Hr(),
 
-            # select_menu,
-        ]
+        #         # select_menu,
+        #     ]
+        # )
+        ],
+        className='page-bg'
     )
+    return home_layout
 
 def layout_operation():
     return html.Div(

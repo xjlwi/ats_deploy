@@ -1,3 +1,8 @@
+#operation {
+    background-color: #0000ff;
+    color: #ffffff;
+  }
+
 .verticalline {
     border-left: 5px solid #efededa1; /* Change color and thickness as needed */
     height: 100%; /* Adjust the height of the vertical line */
@@ -5,8 +10,8 @@
 }
 
 .rounded-img {
-    border: 2px solid #7c7a7a;
-    border-radius: 80%;
+    border: 2px solid #dcdbdb;
+    border-radius: 20%;
 }
 
 .capex-card {
@@ -25,14 +30,14 @@
 }
 
 .card-text-header1 {
-    color: #717070;
-    font-size: 30px;
+    color: #dedcdc;
+    font-size: 28px;
     font-weight: bold;
 }
 
 .card-text-header2 {
-    color: #717070;
-    font-size: 26px;
+    color: #dedcdc;
+    font-size: 20px;
     font-weight: bold;
     justify-content: flex-start;
 }
@@ -51,3 +56,51 @@
     /* font-weight: bold; */
     text-align: center;
 }
+
+.sidebar {
+    background-color: #353B50;
+    padding: 5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0px;
+    width: 50px;
+    z-index: 1000;
+}
+
+.page-bg {
+    background-color: #292F42;
+    /* margin-left: 50px; /* Adjust this value to match the width of the sidebar */
+    /* padding: 800px; */ */
+    
+  }
+
+.page-header{
+    color: #dcdbdb;
+    size: 12px;
+    text-align: center;
+}
+
+.cards-grey{
+    outline: True;
+    text-align: center;
+    background-color: #353B50;
+}
+
+.navbar{
+    padding-left: 50px;
+    background-color: #292F42;
+    color: #dcdbdb;
+    z-index: 999;
+    width: 100%;
+    justify-content: space-around;
+    /* justify-content: flex-start; */
+}
+
+.nav-item .nav-link {
+    color: #333333;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    padding-left: 20px;
+  }
