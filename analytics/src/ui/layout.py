@@ -579,7 +579,7 @@ def get_target_revenue():
     avg_revenue_card = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
                 dbc.CardBody([
-                    html.H5("Average Revenue / course $", className="card-text-header2"), 
+                    html.H5("Avg Revenue / course $", className="card-text-header2"), 
                     html.P(
                         f"{avg_revenue_per_course} ",
                         # style={"text-align": "center",
@@ -684,14 +684,15 @@ def get_target_revenue():
                         dbc.Row([
                             dbc.Col([
                                 dbc.Row([avg_revenue_card], 
-                                        className = "m-2", 
+                                        class_name = "m-2", 
                                         style={'padding': '0'}, ),
                                 # dbc.Row([graph],  style={'padding': '0'}), 
                             ], 
                                 width = 4),
 
                             dbc.Col([
-                                dbc.Row([n_active_card], class_name = 'm-2', style={'padding': '0'}), 
+                                dbc.Row([n_active_card], className = "m-2", 
+                                        style={'padding': '0'}, ),
                             ],
                                     width = 8),
                         ]
@@ -706,7 +707,7 @@ def get_target_revenue():
                                 width = 4),
                             dbc.Col([
                                 # dbc.Row([graph],  style={'padding': '0'}), 
-                                dbc.Row([upcoming_asa], class_name = 'm-2', 
+                                dbc.Row([upcoming_asa], className = "m-2", 
                                         style={'padding': '0'}, ),
                             ],
 
