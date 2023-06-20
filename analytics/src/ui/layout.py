@@ -21,32 +21,23 @@ weekly_rev = '$ 540'
 avg_revenue_per_course = '$ 20'
 number_of_active_users = '60'
 number_of_events_ytd = 10
+number_of_courses_published = 67
+number_rtu_courses = 7
 
 opex_value = '$20 000'
 capex_value = '$5 000'
-
-#################################################################
-#                   DATA LOADING                                #
-#################################################################
-# data = pd.read_csv(f'{data_dir}Sample Status.csv')
-# print(data.head())
-
-# # sort by remove Tags
-# data.columns = [x.lower().strip() for x in data.columns]
-# data = data.drop(columns=['id', 'tags'])
       
 
 #################################################################
 #                   COMPONENETS                                 #
 #################################################################
 # Radial shape components
-
 def create_radial_component(planned_profit, target_profit):
     # Calculate the percentage of planned profit achieved
     percentage = (planned_profit / target_profit) * 100
     
     # Set the color of the radial shape based on the achievement percentage
-    color = 'green' if percentage >= 100 else 'red'
+    color = 'green' if percentage >= 80 else 'red'
     met = 'met' if percentage >= 100 else 'not met'
     # Calculate the circumference of the circle
     circumference = 2 * math.pi * 90
@@ -284,51 +275,43 @@ def update_cards(Categoryoutput=None):
 
     # Create the dbc.Graph figure for the html Radial chart
     planned_vs_kpi = html.Div([
-        create_radial_component(2_000, 10_000)
+        create_radial_component(9_000, 10_000)
     ])
 
     ## 
     if Category == 'Sales':
-        # dynamic Card Content
-       
-
+        # New Signups
         new_signups = dbc.Card([
             # dbc.CardHeader(f"{Category.upper()}"),
             dbc.CardBody([
-                html.H5("New Signups", className="card-text-header2", 
+                html.H5("New Signups (month)", className="card-text-header2", 
                         # style={"text-align": "center",  # Set text alignment to center
                         #         "color": "white"} ,
                         ),
                 html.P(
                     f"{n_signups} ",
-                    # style={"text-align": "center",
-                    #         "color": "white"}, # Set text alignment to center
                     className="card-text-body2",
                 ),
             ],
             id = "new_signups")
-        ], className="capex-card")
+        ], className="sales-card")
 
-        # dynamic Sales
-        new_sales = dbc.Card([
+        # B2B Sales
+        new_sales_revenue = dbc.Card([
             # dbc.CardHeader(f"{Category.upper()}"),
             dbc.CardBody([
                 html.H5("New Sales Revenue", className="card-text-header2",
-                        # style={"text-align": "center",  # Set text alignment to center
-                        #         "color": "white"} ,),
                     ),
                 html.P(
-                    f"{b2b_sales}",
-                    # style={"text-align": "center",  # Set text alignment to center
-                    #         "color": "white"} ,  # Set font color to white # Set text alignment to center
+                    f"{weekly_rev}",
                     className="card-text-body2",
                 ),
             ],
             id = "new_sales_revenue")
-        ], className="capex-card")
+        ], className="sales-card")
 
-        # dynamic Sales
-        profit_ytd = dbc.Card([
+        # B2C Sales
+        b2c_revenue = dbc.Card([
                 dbc.CardBody([
                 html.H5("B2C Sales ", className="card-text-header2",
                         # style={"text-align": "center",  # Set text alignment to center
@@ -341,36 +324,47 @@ def update_cards(Categoryoutput=None):
                     className="card-text-body2",
                 ),
             ],
-            id = "proft_ytd")
-        ], className="capex-card")
+            id = "b2c_sales")
+        ], className="sales-card")
 
         # dynamic Sales
-        weekly_revenue = dbc.Card([
+        b2b_revenue = dbc.Card([
                 dbc.CardBody([
                 html.H5("B2B Sales", className="card-text-header2"),
                 html.P(
-                    f"{weekly_rev}",
+                    f"{b2b_sales}",
                     # style={"text-align": "center",  # Set text alignment to center
                     #         "color": "white"} , # Set text alignment to center
                     className="card-text-body2",
                 ),
             ],
             id = "weekly_rev")
-        ], className="capex-card")
+        ], className="sales-card")
+
 
         row_3 = dbc.Container([
+                    ### HEADER ROW ###
+                    dbc.Row(
+                        dbc.Col(
+                                html.H2("Sales by Business 💰", className='page-header'),
+                                # width={"size": 12, "align":'stretch', "color":'#fffbfb'},
+                        ),
+                        justify='center',
+                    ),
+
                     dbc.Row([
                         dbc.Col([
-                            dbc.Row([weekly_revenue],  className="m-2",), 
-                            dbc.Row([profit_ytd], className = "m-2"),
-                            dbc.Row([new_sales], className = "m-2"),
+                            dbc.Row([b2b_revenue],  className="m-2",), 
+                            dbc.Row([b2c_revenue], className = "m-2"),
+                            # dbc.Row([new_sales], className = "m-2"),
                         ], 
                             width = 4),
                         # html.Div(style={'border-left': '5px solid #efededa1', 'height': '100%'}, className='verticalline'),
                         # dbc.Col([], width=1) #insert space,
                         dbc.Col([
                             dbc.Row([new_signups], className = "m-2"), 
-                            dbc.Row([graph],  style={'padding': '0'}), 
+                            dbc.Row([new_sales_revenue], className = "m-2"), 
+                            # dbc.Row([graph],  style={'padding': '0'}), 
                                 ],
                                 width = 4),
 
@@ -381,38 +375,13 @@ def update_cards(Categoryoutput=None):
                         # html.Hr(), html.Div(className="verticalline")
                         
                         # dbc.Col([], width=3),
-                    ]
+                    ],
+                    align='end',
                 ),
                 ],
-                id='CardRow'
+                id='CardRow', 
+                className='custom-container',
         )
-                # dbc.Row(
-                #     [
-                #         dbc.Col(html.Hr(), width = 4),
-                #         dbc.Col(html.Div(className="verticalline"), width=6),
-                #     ],
-                #     id='HorizontalLine'
-                # ),
-                # dbc.Row(
-                #     [
-                #         # dbc.Col(dbc.Card(new_sales, color="#abdbe3", outline=True), width = 4),
-                #         dbc.Col(html.Div(className="verticalline"), width=6),
-                #     ]
-                # ),
-                # dbc.Row(
-                #     [
-                #         dbc.Col(html.Hr(), width = 4),
-                #         dbc.Col(html.Div(className="verticalline"), width=6),
-                #     ],
-                #     id='HorizontalLine'
-                # ),
-                # dbc.Row(
-                #     [
-                #         # dbc.Col(dbc.Card(profit_ytd, color="#abdbe3", outline=True), width = 4),
-                #         dbc.Col(html.Div(className="verticalline"), width=6),
-                #     ],
-                    
-                # ),
                 
         
         return row_3
@@ -652,6 +621,52 @@ def get_target_revenue():
                 id = "new_signups")
             ], className="sales-card")
 
+    course_published = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                dbc.CardBody([
+                    html.H5("# Courses Published", className="card-text-header2"), 
+                            # style={"text-align": "center",  # Set text alignment to center
+                            #         "color": "white"} ,),
+                    html.P(
+                        f"{number_of_courses_published} ",
+                        # style={"text-align": "center",
+                        #         "color": "white"}, # Set text alignment to center
+                        className="card-text-body2",
+                    ),
+                ],
+                id = "course_published")
+            ], className="sales-card")
+    
+    rtu_courses = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                dbc.CardBody([
+                    html.H5("# Courses Ready to upload", className="card-text-header2"), 
+                            # style={"text-align": "center",  # Set text alignment to center
+                            #         "color": "white"} ,),
+                    html.P(
+                        f"{number_rtu_courses} ",
+                        # style={"text-align": "center",
+                        #         "color": "white"}, # Set text alignment to center
+                        className="card-text-body2",
+                    ),
+                ],
+                id = "rtu_courses")
+            ], className="sales-card")
+    
+    upcoming_asa = dbc.Card([
+                dbc.CardBody([
+                html.H5("Upcoming # of ASA", className="card-text-header2"),
+                html.P(
+                    f"{3}",
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} , # Set text alignment to center
+                    className="card-text-body2",
+                ),
+            ],
+            id = "upcoming_asa")
+        ], className="sales-card")
+
+    
     ##########################################################
     #       Chart the 3 rows, LHS Card, RHS Graph            #
     ##########################################################
@@ -659,7 +674,7 @@ def get_target_revenue():
                         ### HEADER ROW ###
                         dbc.Row(
                             dbc.Col(
-                                    html.H2("Sales by Business", className='page-header'),
+                                    html.H2("Other KPI 🏆", className='page-header'),
                                     # width={"size": 12, "align":'stretch', "color":'#fffbfb'},
                             ),
                             justify='center',
@@ -670,33 +685,19 @@ def get_target_revenue():
                             dbc.Col([
                                 dbc.Row([avg_revenue_card], 
                                         className = "m-2", 
-                                        style={'padding': '0'}, ), 
+                                        style={'padding': '0'}, ),
                                 # dbc.Row([graph],  style={'padding': '0'}), 
                             ], 
                                 width = 4),
+
                             dbc.Col([
-                                dbc.Row([graph],  style={'padding': '0'}), 
+                                dbc.Row([n_active_card], class_name = 'm-2', style={'padding': '0'}), 
                             ],
                                     width = 8),
-
                         ]
                     ),
 
                     ### SECOND ROW ###
-                    dbc.Row([
-                            dbc.Col([
-                                dbc.Row([n_active_card], className = "m-2", 
-                                        style={'padding': '0'}, ),
-                            ], 
-                                width = 4),
-                            dbc.Col([
-                                dbc.Row([graph],  style={'padding': '0'}), 
-                            ],
-                                width = 8),
-                            ]
-                    ),
-
-                    ### THIRD ROW ###
                     dbc.Row([
                             dbc.Col([
                                 dbc.Row([events_ytd_card], class_name = 'm-2', 
@@ -704,7 +705,26 @@ def get_target_revenue():
                             ], 
                                 width = 4),
                             dbc.Col([
-                                dbc.Row([graph],  style={'padding': '0'}), 
+                                # dbc.Row([graph],  style={'padding': '0'}), 
+                                dbc.Row([upcoming_asa], class_name = 'm-2', 
+                                        style={'padding': '0'}, ),
+                            ],
+
+                                width = 8),
+                            ]
+                    ),
+
+                    ### THIRD ROW ###
+                    dbc.Row([
+                            dbc.Col([
+                                dbc.Row([course_published], class_name = 'm-2', 
+                                        style={'padding': '0'}, ),
+                            ], 
+                                width = 4),
+                            dbc.Col([
+                                # dbc.Row([graph],  style={'padding': '0'}), 
+                                dbc.Row([rtu_courses], className = "m-2", 
+                                        style={'padding': '0'}, ),
                             ],
                                 width = 8),
                             ]
@@ -725,25 +745,11 @@ def layout_home():
     home_layout = html.Div(
         [
             sidebar,
-        #     children=[
-        #         # html.H1("Home Page"),
-        #         # html.P("Welcome to the Home Page!"),
-        #         # select_menu,
             ### First section ##
             create_opex_card(),
-        #         # opex_capex,
-        #         html.Br(),
-            html.Hr(),
-            # row_3,
-        #         html.Hr(),
-        #         html.Br(),
-        # Second section 
+            row_3,
+            ### Second section ##
             target_revenue,
-        #         html.Hr(),
-
-        #         # select_menu,
-        #     ]
-        # )
         ],
         className='page-bg'
     )
