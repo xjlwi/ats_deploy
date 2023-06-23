@@ -71,13 +71,13 @@ def create_opex_card():
             # First row
             dbc.Row(
             children=[
-                dbc.Col(
-                        html.Img(src="assets/Opex.png", className="rounded-img", style={"height": "100px", "width": "100px"}),
-                        width=3, 
-                        ),
+                # dbc.Col(
+                #         html.Img(src="assets/Opex.png", className="rounded-img", style={"height": "100px", "width": "100px"}),
+                #         width=3, 
+                #         ),
                 dbc.Col(
                     html.P("80 000", className="card-text-header1"),
-                    width=6
+                    width=12
                 ),
             ], 
             align = "center"
@@ -107,13 +107,13 @@ def create_opex_card():
             dbc.Row(
             # style={"backgroundColor": "#121211a1", "borderRadius": "8px", "padding": "16px"},
             children=[
-                dbc.Col(
-                        html.Img(src="assets/Capex.png", className="rounded-img", style={"height": "100px", "width": "100px"}),
-                        width=2
-                        ),
+                # dbc.Col(
+                #         html.Img(src="assets/Capex.png", className="rounded-img", style={"height": "100px", "width": "100px"}),
+                #         width=2
+                #         ),
                 dbc.Col(
                     html.P("12 000", className="card-text-header1"),
-                    width= 9
+                    width= 12
                 ),
             ], 
             align = "center"
@@ -344,13 +344,13 @@ def update_cards(Categoryoutput=None):
 
         row_3 = dbc.Container([
                     ### HEADER ROW ###
-                    dbc.Row(
-                        dbc.Col(
-                                html.H2("Sales by Business 💰", className='page-header'),
-                                # width={"size": 12, "align":'stretch', "color":'#fffbfb'},
-                        ),
-                        justify='center',
-                    ),
+                    # dbc.Row(
+                    #     dbc.Col(
+                    #             html.H2("Sales by Business 💰", className='page-header'),
+                    #             # width={"size": 12, "align":'stretch', "color":'#fffbfb'},
+                    #     ),
+                    #     justify='center',
+                    # ),
 
                     dbc.Row([
                         dbc.Col([
@@ -672,13 +672,13 @@ def get_target_revenue():
     ##########################################################
     target_revenue = dbc.Container([
                         ### HEADER ROW ###
-                        dbc.Row(
-                            dbc.Col(
-                                    html.H2("Other KPI 🏆", className='page-header'),
-                                    # width={"size": 12, "align":'stretch', "color":'#fffbfb'},
-                            ),
-                            justify='center',
-                        ),
+                        # dbc.Row(
+                        #     dbc.Col(
+                        #             html.H2("Other KPI 🏆", className='page-header'),
+                        #             # width={"size": 12, "align":'stretch', "color":'#fffbfb'},
+                        #     ),
+                        #     justify='center',
+                        # ),
 
                         ### FIRST ROW ###
                         dbc.Row([
@@ -759,41 +759,29 @@ def layout_home():
 def layout_operation():
     return html.Div(
         children=[
-            html.H1("👩🏻‍💼 Operation Page"),
-            html.P("Welcome to the Novalearn Operations Page!", style={'textAlign':'center'}),
+            html.H1(" Operation Page", className='page-header'),
             html.Br(),
             events,
             target_revenue,
-            ## LIST OF PROGRAMS ##
-            # html.Div([
-            #     html.H4("Upcoming Events"),
-            #     html.Li("Events Upcoming"),
-            #     html.H4("Ongoing Events"),
-            #     html.Li([
-            #          html.P("ASA ISNS"),
-            #     ]),
-            # ]),
-        ]
-            
+        ],
+        className='page-bg'
+        
     )
 
 
 def layout_creative():
     return html.Div(
         children=[
-            html.H1("🎨 Creative and Content Page"),
-            html.P("Welcome to the Novalearn Creative Page!"),
+            html.H1("🎨 Creative and Content Page", className='page-header'),
             html.Br(),
-        ]
-            
+        ],
+        className='page-bg'
     )
 
 def layout_product():
     return html.Div(
         children=[
-            html.H1("🌐 Product Page 🐱‍💻"),
-            html.P("Welcome to the Product Page!"),
-            html.Br(),
+            html.H1("🌐 Product Page 🐱‍💻", className='page-header'),
             product_menu,
             html.Div([
                 dcc.Graph(id='GraphProduct'),
@@ -802,4 +790,6 @@ def layout_product():
 
         ],
         id="PRODUCT_PAGE",
+        className='page-bg'
+
     )
