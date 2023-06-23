@@ -15,7 +15,7 @@ data_dir = os.path.join(os.getcwd(),'data/01_raw/ui/')
 # os.chdir(dir)
 #
 Notion_db_content = 'https://www.notion.so/novalearn/b194bb2c04b1444084d1c3610d8bc672?v=0a63faf0c5074a9d9240e5a7f9c7a869&pvs=4'
-courses_raw = pd.read_csv('data/01_raw/Creative/All Courses b194bb2c04b1444084d1c3610d8bc672.csv')
+courses_raw = pd.read_csv(os.path.join(os.getcwd(), 'src/ui/data/All Courses b194bb2c04b1444084d1c3610d8bc672.csv'))
 
 n_signups = 44
 b2b_sales = '$ 3000'
