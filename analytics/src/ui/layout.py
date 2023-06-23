@@ -6,6 +6,8 @@ import dash_dangerously_set_inner_html
 import os, math
 import pandas as pd
 from plotly import graph_objects as go
+import plotly.express as px
+
 from pathlib import Path
 dir = Path(__file__).parent
 print (os.getcwd())
@@ -13,6 +15,8 @@ data_dir = os.path.join(os.getcwd(),'data/01_raw/ui/')
 # os.chdir(dir)
 #
 Notion_db_content = 'https://www.notion.so/novalearn/b194bb2c04b1444084d1c3610d8bc672?v=0a63faf0c5074a9d9240e5a7f9c7a869&pvs=4'
+courses_raw = pd.read_csv('data/01_raw/Creative/All Courses b194bb2c04b1444084d1c3610d8bc672.csv')
+
 n_signups = 44
 b2b_sales = '$ 3000'
 b2c_sales = '$ 800'
@@ -26,7 +30,49 @@ number_rtu_courses = 7
 
 opex_value = '$20 000'
 capex_value = '$5 000'
-      
+
+def preprocess_courses(courses_raw:pd.DataFrame) -> pd.DataFrame:
+
+    courses_raw.columns = [x.lower().replace(' ', '_') for x in courses_raw.columns]
+    # Courses
+    courses_by_status = courses_raw.groupby('subject')['status'].value_counts().to_frame()#.reset_index()
+    courses_by_status.columns = ['n_course']
+    courses_by_status = courses_by_status.reset_index(drop=False)
+
+    return courses_by_status
+
+def get_courses_barchart(courses_by_status: pd.DataFrame):
+
+    color_mapping = {
+    'Published': '#0b912a',
+    'Planning': '#5aa3de',
+    'Ready For Editing': '#939ca3',
+    'Editing': '#595169',
+    'Scripts Complete': '#636c77',
+    'Writing Scripts': '#2f4b70',
+    'Ready For Scripts': '#7fe897',
+    'Ready To Upload': '#D9e865',
+    }
+    
+    fig = px.bar(courses_by_status, x='subject', color='status', y='n_course', barmode='group', color_discrete_map=color_mapping)
+    fig.update_layout( plot_bgcolor='rgba(0, 0, 0, 0)',
+                      xaxis=dict(
+                            showline=True,
+                            linewidth=2,
+                            linecolor='black',
+                            mirror=True
+                        ),
+                    yaxis=dict(
+                            showline=True,
+                            linewidth=2,
+                            linecolor='black',
+                            mirror=True
+                        ),
+                    xaxis_title = 'Subjects',
+                    yaxis_title = '# of courses'
+      )
+
+    return fig
 
 #################################################################
 #                   COMPONENETS                                 #
@@ -571,7 +617,48 @@ graph = dcc.Graph(
     figure=temp,
     style={'height': "100px", }
 )
+########################################################
+#              COMPONENTS CREATIVE BOTTOM              #
+########################################################
+courses_by_status = preprocess_courses(courses_raw)
+courses_graph = dcc.Graph(
+    figure = get_courses_barchart(courses_by_status),
+    style = {'height': "800px"}
+)
+# courses_chart =  dbc.Container([
+#     ### FIRST ROW ###
+#         dbc.Row([
+#             dbc.Col([
+#                 dbc.Row([courses_graph], 
+#                         style={'padding': '0'}, ),
+#                 # dbc.Row([graph],  style={'padding': '0'}), 
+#             ], 
+#                 width = 12),
+#                 ]
+#                     ),
+#                 ],
+#                     id='coursesChart', fluid=False
+#             )
 
+courses_chart = dbc.Container(
+    [
+        dbc.Row(
+            [
+                dbc.Col(
+                    dbc.DropdownMenu(
+                        label="Visualisation",
+                        children=[
+                            dbc.DropdownMenuItem(
+                                children=[courses_graph] 
+                                )
+                        ]
+                                )
+                        )
+            ],
+                )
+    ]
+)
+   
 def get_target_revenue():
     # 3 rows, 2 columns. Each row: Card LHS || Area Chart RHS
 
@@ -774,6 +861,9 @@ def layout_creative():
         children=[
             html.H1("🎨 Creative and Content Page", className='page-header'),
             html.Br(),
+            target_revenue,
+            html.Br(),
+            courses_chart,
         ],
         className='page-bg'
     )
@@ -781,12 +871,13 @@ def layout_creative():
 def layout_product():
     return html.Div(
         children=[
-            html.H1("🌐 Product Page 🐱‍💻", className='page-header'),
-            product_menu,
-            html.Div([
-                dcc.Graph(id='GraphProduct'),
-            ],
-            style={'width': '50%', 'display': 'inline-block'}),
+
+            # html.H1("🌐 Product Page 🐱‍💻", className='page-header'),
+            # product_menu,
+            # html.Div([
+            #     dcc.Graph(id='GraphProduct'),
+            # ],
+            # style={'width': '50%', 'display': 'inline-block'}),
 
         ],
         id="PRODUCT_PAGE",
