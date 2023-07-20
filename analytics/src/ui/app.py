@@ -21,6 +21,10 @@ from layout import (
     layout_product, 
     layout_operation,
     update_cards,
+    update_courses_tracker,
+    courses_raw,
+    # progress_bar,
+    update_progress_bar
 )
 
 app = dash.Dash(__name__, title='Novalearn Internal Dashboard 🍣', external_stylesheets=[dbc.themes.FLATLY, "assets/custom.css"])
@@ -43,8 +47,8 @@ app.layout =  dbc.Container([
         html.Nav(
             children=[
                 html.A("Home", href="/", className="nav-link"),
-                html.A("Operation", href="/operation", className="nav-link"),
                 html.A("Product", href="/product", className="nav-link"),
+                html.A("Marketing", href="/marketing", className="nav-link"),
                 html.A("Creative", href="/creative", className="nav-link"),
             ],
             className="navbar"
@@ -85,7 +89,7 @@ def display_page(pathname):
         return layout_product()
     elif pathname == "/creative":
         return layout_creative()
-    elif pathname == "/operation":
+    elif pathname == "/marketing":
         return layout_operation()
     else:
         return layout_home()
@@ -103,5 +107,17 @@ def update_graph_product(product_category):
 def update_cards_heading(Category):
     return update_cards(Category)
     
+@app.callback(Output ("CoursesTracker", 'figure'), [Input('monthRange', 'value')])
+def update_courses_charts(monthRange):
+    return update_courses_tracker(courses_raw, monthRange)
+
+# Create a callback to update the progress bar
+@app.callback(
+    Output ("ProgressBar", "children"), ## TODO
+    [Input('my-button', 'n_clicks')]
+)
+def update_progress(n_clicks):
+    return update_progress_bar(n_clicks)
+
 if __name__ == '__main__':
     app.run_server(debug=True)

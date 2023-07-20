@@ -86,6 +86,12 @@
     text-align: center;
 }
 
+.header2 {
+    color: #dcdbdb;
+    size: 10px;
+    text-align: center;
+}
+
 .navbar {
     padding-left: 50px;
     background-color: #292F42;

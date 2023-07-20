@@ -11,11 +11,10 @@ import plotly.express as px
 from pathlib import Path
 dir = Path(__file__).parent
 print (os.getcwd())
-data_dir = os.path.join(os.getcwd(),'data/01_raw/ui/')
 # os.chdir(dir)
 #
 Notion_db_content = 'https://www.notion.so/novalearn/b194bb2c04b1444084d1c3610d8bc672?v=0a63faf0c5074a9d9240e5a7f9c7a869&pvs=4'
-courses_raw = pd.read_csv(os.path.join(os.getcwd(), 'src/ui/data/All Courses b194bb2c04b1444084d1c3610d8bc672.csv'))
+courses_raw = pd.read_csv('data/All Courses b194bb2c04b1444084d1c3610d8bc672.csv')
 
 n_signups = 44
 b2b_sales = '$ 3000'
@@ -35,14 +34,17 @@ def preprocess_courses(courses_raw:pd.DataFrame) -> pd.DataFrame:
 
     courses_raw.columns = [x.lower().replace(' ', '_') for x in courses_raw.columns]
     # Courses
+    
     courses_by_status = courses_raw.groupby('subject')['status'].value_counts().to_frame()#.reset_index()
     courses_by_status.columns = ['n_course']
     courses_by_status = courses_by_status.reset_index(drop=False)
 
     return courses_by_status
 
-def get_courses_barchart(courses_by_status: pd.DataFrame):
+def get_courses_barchart(courses_by_status: pd.DataFrame, monthRange=None):
 
+    courses_by_status = preprocess_courses(courses_raw)
+    
     color_mapping = {
     'Published': '#0b912a',
     'Planning': '#5aa3de',
@@ -485,6 +487,28 @@ def update_cards(Categoryoutput=None):
         )
         return row_3
 
+# Progress Bar
+
+def update_progress_bar(n_clicks=None):
+    
+    if n_clicks is None: 
+        n_clicks = 0
+    
+    progress_bar = dbc.Progress(
+                            value=n_clicks,
+                            max=100,
+                            )
+    progress_bar_component = html.Div(
+        children=[
+            html.Button('Start', id='my-button'),
+            progress_bar,
+        ],
+        id='ProgressBar',
+    )
+
+    return progress_bar_component
+
+pb = update_progress_bar()
 
 events = dbc.Container([
                 dbc.Row([
@@ -620,45 +644,44 @@ graph = dcc.Graph(
 ########################################################
 #              COMPONENTS CREATIVE BOTTOM              #
 ########################################################
-courses_by_status = preprocess_courses(courses_raw)
-courses_graph = dcc.Graph(
-    figure = get_courses_barchart(courses_by_status),
-    style = {'height': "800px"}
-)
-# courses_chart =  dbc.Container([
-#     ### FIRST ROW ###
-#         dbc.Row([
-#             dbc.Col([
-#                 dbc.Row([courses_graph], 
-#                         style={'padding': '0'}, ),
-#                 # dbc.Row([graph],  style={'padding': '0'}), 
-#             ], 
-#                 width = 12),
-#                 ]
-#                     ),
-#                 ],
-#                     id='coursesChart', fluid=False
-#             )
 
-courses_chart = dbc.Container(
-    [
-        dbc.Row(
-            [
-                dbc.Col(
-                    dbc.DropdownMenu(
-                        label="Visualisation",
-                        children=[
-                            dbc.DropdownMenuItem(
-                                children=[courses_graph] 
-                                )
-                        ]
-                                )
-                        )
-            ],
+def update_courses_tracker(courses_raw, monthRange:int=None):
+    
+    courses_by_status = preprocess_courses(courses_raw)
+
+    # Create a graph component
+    courses_graph = dcc.Graph(
+        figure = get_courses_barchart(courses_by_status),
+        style = {'height': "800px"}
+    )
+    # Position graph within the container
+    courses_chart = dbc.Container(
+        [
+            dbc.Row(
+                [
+                    dbc.Col(children=[courses_graph] 
                 )
-    ]
-)
-   
+            ]
+            ),
+
+        ],
+        id='CoursesTracker',
+        className='custom-container',
+    )
+
+    return courses_chart
+
+month_slider = html.Div([
+    dcc.Slider(
+        id='monthRange',
+        min=0,
+        max=12,
+        step=3,
+        value=3
+    ),   
+], id='monthRange')
+courses_chart = update_courses_tracker(courses_raw)
+
 def get_target_revenue():
     # 3 rows, 2 columns. Each row: Card LHS || Area Chart RHS
 
@@ -862,6 +885,7 @@ def layout_creative():
             html.H1("🎨 Creative and Content Page", className='page-header'),
             html.Br(),
             target_revenue,
+            html.H3("Subjects published till date", className='header2'),
             html.Br(),
             courses_chart,
         ],
@@ -871,7 +895,7 @@ def layout_creative():
 def layout_product():
     return html.Div(
         children=[
-
+            pb,
             # html.H1("🌐 Product Page 🐱‍💻", className='page-header'),
             # product_menu,
             # html.Div([
