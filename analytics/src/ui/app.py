@@ -19,7 +19,7 @@ from layout import (
     layout_creative,
     layout_home,
     layout_product, 
-    layout_operation,
+    layout_marketing,
     update_cards,
     update_courses_tracker,
     courses_raw,
@@ -56,32 +56,6 @@ app.layout =  dbc.Container([
         html.Div(id="page-content")
 ], fluid=True)
 
-# @app.callback(
-#     Output('indicator-graphic', 'figure'),
-#     Input('xaxis-column', 'value'),
-#     Input('yaxis-column', 'value'),
-#     Input('Category', 'value'),
-#     Input('product_category', 'value'),
-#     Input('year--slider', 'value'))
-# def update_graph(Category, product_category,
-#                  year_value):
-#     dff = df[df['Year'] == year_value]
-#     fig = go.Figure()
-#     # fig = px.scatter(x=dff[dff['Indicator Name'] == xaxis_column_name]['Value'],
-#     #                  y=dff[dff['Indicator Name'] == yaxis_column_name]['Value'],
-#     #                  hover_name=dff[dff['Indicator Name'] == yaxis_column_name]['Country Name'])
-
-#     # fig.update_layout(margin={'l': 40, 'b': 40, 't': 10, 'r': 0}, hovermode='closest')
-
-#     # fig.update_xaxes(title=Category,
-#     #                  )
-
-#     # fig.update_yaxes(title=product_category,
-#     #                 )
-#     fig.update_layout(title = Category)
-
-#     return fig
-
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def display_page(pathname):
@@ -90,7 +64,7 @@ def display_page(pathname):
     elif pathname == "/creative":
         return layout_creative()
     elif pathname == "/marketing":
-        return layout_operation()
+        return layout_marketing()
     else:
         return layout_home()
 
@@ -113,8 +87,8 @@ def update_courses_charts(monthRange):
 
 # Create a callback to update the progress bar
 @app.callback(
-    Output ("ProgressBar", "children"), ## TODO
-    [Input('my-button', 'n_clicks')]
+    Output ("progressBar", "children"), ## TODO
+    [Input('time-filter', 'value')]
 )
 def update_progress(n_clicks):
     return update_progress_bar(n_clicks)

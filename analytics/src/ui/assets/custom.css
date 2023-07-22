@@ -63,6 +63,14 @@
     text-align: center;
 }
 
+.timeline-text {
+    color: #fffbfb;
+    font-size: 10;
+    letter-spacing: 2px; /* Adjust the spacing between characters */
+    /* font-weight: bold; */
+    text-align: center;
+}
+
 .sidebar {
     background-color: #353B50;
     padding: 5px;

@@ -488,27 +488,57 @@ def update_cards(Categoryoutput=None):
         return row_3
 
 # Progress Bar
+time_slicer = dbc.Container([
+        dbc.Row(
+            dbc.Col(
+                html.Div(
+                children=[
+                    html.H5("Select a timeline slicer", className="timeline-text"),
+                    dcc.Dropdown(id='time-filter',
+                                options= [
+                                {'label': '1 Month', 'value': '1 month'}, 
+                                {'label': '3 Months', 'value': '3 month'}, 
+                                {'label': '6 Months', 'value': '6 month'}, 
+                                ],
+                                value = '1 month'), # default selected option
+                        ],
+                ),
+                width={"size": 2, 'offset': 8}
+            )
+        )
+ ])
 
-def update_progress_bar(n_clicks=None):
+def update_progress_bar(n_clicks):
     
-    if n_clicks is None: 
-        n_clicks = 0
+    print (n_clicks)
+    if n_clicks == '1 month':
+        tempVal = 3  
+        print (tempVal)
+    else:
+        tempVal = 20
     
     progress_bar = dbc.Progress(
-                            value=n_clicks,
+                            value=tempVal,
                             max=100,
                             )
-    progress_bar_component = html.Div(
-        children=[
-            html.Button('Start', id='my-button'),
-            progress_bar,
-        ],
-        id='ProgressBar',
-    )
+    # progress_bar_component = dbc.Container([
+    #     html.Div(
+    #     children=[
+    #         progress_bar
+    #     ],)
+    # ], id='progressBar')
+    progress_bar_component = dbc.Container([
+                                dbc.Row(
+                                    dbc.Col(
+                                        html.Div(children=[progress_bar]),
+                                        width = {"size": 3, "offset": 3},
+                                    ),
+                                ),
+                                ], id='progressBar')
 
     return progress_bar_component
 
-pb = update_progress_bar()
+pb = update_progress_bar(n_clicks=None)
 
 events = dbc.Container([
                 dbc.Row([
@@ -866,13 +896,15 @@ def layout_home():
     )
     return home_layout
 
-def layout_operation():
+def layout_marketing():
     return html.Div(
         children=[
-            html.H1(" Operation Page", className='page-header'),
+            html.H1(" Marketing Page", className='page-header'),
             html.Br(),
             events,
             target_revenue,
+            time_slicer,
+            pb,
         ],
         className='page-bg'
         
