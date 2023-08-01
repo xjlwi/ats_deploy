@@ -21,7 +21,7 @@ b2b_sales = '$ 3000'
 b2c_sales = '$ 800'
 weekly_rev = '$ 540'
 
-avg_revenue_per_course = '$ 20'
+avg_cost_per_course = '$ 20'
 number_of_active_users = '60'
 number_of_events_ytd = 10
 number_of_courses_published = 67
@@ -29,6 +29,8 @@ number_rtu_courses = 7
 
 opex_value = '$20 000'
 capex_value = '$5 000'
+image_width = '80px'
+image_height = '80px'
 
 def preprocess_courses(courses_raw:pd.DataFrame) -> pd.DataFrame:
 
@@ -41,7 +43,7 @@ def preprocess_courses(courses_raw:pd.DataFrame) -> pd.DataFrame:
 
     return courses_by_status
 
-def get_courses_barchart(courses_by_status: pd.DataFrame, monthRange=None):
+def get_courses_barchart(courses_by_status: pd.DataFrame, time_filter=None):
 
     courses_by_status = preprocess_courses(courses_raw)
     
@@ -540,7 +542,7 @@ def update_progress_bar(n_clicks):
 
 pb = update_progress_bar(n_clicks=None)
 
-events = dbc.Container([
+placeholder = dbc.Container([
                 dbc.Row([
                     ## Upcoming events
                     dbc.Col([
@@ -675,10 +677,10 @@ graph = dcc.Graph(
 #              COMPONENTS CREATIVE BOTTOM              #
 ########################################################
 
-def update_courses_tracker(courses_raw, monthRange:int=None):
+def get_courses_chart(courses_raw, time_filter=None):
     
     courses_by_status = preprocess_courses(courses_raw)
-
+    print (f'--------------- Courses------  {time_filter}')
     # Create a graph component
     courses_graph = dcc.Graph(
         figure = get_courses_barchart(courses_by_status),
@@ -710,7 +712,7 @@ month_slider = html.Div([
         value=3
     ),   
 ], id='monthRange')
-courses_chart = update_courses_tracker(courses_raw)
+courses_chart = get_courses_chart(courses_raw)
 
 def get_target_revenue():
     # 3 rows, 2 columns. Each row: Card LHS || Area Chart RHS
@@ -719,9 +721,9 @@ def get_target_revenue():
     avg_revenue_card = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
                 dbc.CardBody([
-                    html.H5("Avg Revenue / course $", className="card-text-header2"), 
+                    html.H5("Avg Cost / course", className="card-text-header2"), 
                     html.P(
-                        f"{avg_revenue_per_course} ",
+                        f"{avg_cost_per_course} ",
                         # style={"text-align": "center",
                         #         "color": "white"}, # Set text alignment to center
                         className="card-text-body2",
@@ -846,7 +848,6 @@ def get_target_revenue():
                             ], 
                                 width = 4),
                             dbc.Col([
-                                # dbc.Row([graph],  style={'padding': '0'}), 
                                 dbc.Row([upcoming_asa], className = "m-2", 
                                         style={'padding': '0'}, ),
                             ],
@@ -878,6 +879,80 @@ def get_target_revenue():
 
 target_revenue = get_target_revenue()
 
+## CARDS : 3 samples (avg revenue per course, number of active users, # of events YTD)
+def get_kpi_titles():
+    """ 
+    Plots as per new KPI Dashboard
+    """
+    FINANCIALS = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                    dbc.CardImg(src="assets/sidebar/saving.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardBody([
+                        html.H5("FINANCIALS", className="card-text-header2"), 
+                        html.P(
+                            className="card-text-body2",
+                        )],
+                    id = "financials_card"),
+                ],
+                className="sales-card")
+
+    CUSTOMER = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                    dbc.CardImg(src="assets/sidebar/rating.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardBody([
+                        html.H5("CUSTOMER CENTRICITY", className="card-text-header2"), 
+                        html.P(
+                            className="card-text-body2",
+                        )],
+                    id = "customer_centric"),
+                ],
+                className="sales-card")
+
+    TALENT_MGT = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                    dbc.CardImg(src="assets/sidebar/talent-management.png", top=True,  style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardBody([
+                        html.H5("TALENT MANAGEMENT", className="card-text-header2"), 
+                        html.P(
+                            className="card-text-body2",
+                        )],
+                    id = "talent_management"),
+                ],
+                className="sales-card")
+
+
+    ##########################################################
+    #       Chart the 3 rows, LHS Card, RHS Graph            #
+    ##########################################################
+    ### FIRST ROW ###
+    title_cards = dbc.Container([
+        dbc.Row([
+                dbc.Col([
+                    dbc.Row([FINANCIALS], 
+                            class_name = "m-2", 
+                            style={'padding': '0'}, ),
+                    dbc.Row([CUSTOMER], className = "m-2", 
+                            style={'padding': '0'}, ),
+                    dbc.Row([TALENT_MGT], className = "m-2", 
+                            style={'padding': '0'}, ),
+                    ],width = 4),
+                #############################################################
+                #           KPI VALUE CARDS LEVERS HERE                     #
+                #############################################################
+
+                dbc.Col([
+                    
+                ],
+                width = 4),
+
+
+                ]),
+    ])
+    
+    
+    return title_cards
+
+title_cards = get_kpi_titles()
 #################################################################
 #                           LAYOUT                              #
 #################################################################
@@ -887,10 +962,12 @@ def layout_home():
         [
             sidebar,
             ### First section ##
-            create_opex_card(),
-            row_3,
-            ### Second section ##
-            target_revenue,
+            # create_opex_card(),
+            # row_3,
+            # ### Second section ##
+            # target_revenue,
+            ### Test new section:
+            get_kpi_titles()
         ],
         className='page-bg'
     )
@@ -901,7 +978,7 @@ def layout_marketing():
         children=[
             html.H1(" Marketing Page", className='page-header'),
             html.Br(),
-            events,
+            placeholder,
             target_revenue,
             time_slicer,
             pb,
@@ -919,6 +996,7 @@ def layout_creative():
             target_revenue,
             html.H3("Subjects published till date", className='header2'),
             html.Br(),
+            time_slicer,
             courses_chart,
         ],
         className='page-bg'
@@ -927,6 +1005,7 @@ def layout_creative():
 def layout_product():
     return html.Div(
         children=[
+            time_slicer,
             pb,
             # html.H1("🌐 Product Page 🐱‍💻", className='page-header'),
             # product_menu,
