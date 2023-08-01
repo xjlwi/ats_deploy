@@ -21,7 +21,7 @@ from layout import (
     layout_product, 
     layout_marketing,
     update_cards,
-    update_courses_tracker,
+    get_courses_chart,
     courses_raw,
     # progress_bar,
     update_progress_bar
@@ -81,9 +81,9 @@ def update_graph_product(product_category):
 def update_cards_heading(Category):
     return update_cards(Category)
     
-@app.callback(Output ("CoursesTracker", 'figure'), [Input('monthRange', 'value')])
-def update_courses_charts(monthRange):
-    return update_courses_tracker(courses_raw, monthRange)
+@app.callback(Output ("CoursesTracker", 'figure'), [Input('time-filter', 'value')])
+def update_courses_charts(time_filter):
+    return get_courses_chart(courses_raw, time_filter)
 
 # Create a callback to update the progress bar
 @app.callback(
