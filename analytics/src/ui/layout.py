@@ -886,7 +886,7 @@ def get_kpi_titles():
     """
     FINANCIALS = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
-                    dbc.CardImg(src="assets/sidebar/saving.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardImg(src="assets/sidebar/dollar.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
                     dbc.CardBody([
                         html.H5("FINANCIALS", className="card-text-header2"), 
                         html.P(
@@ -894,7 +894,7 @@ def get_kpi_titles():
                         )],
                     id = "financials_card"),
                 ],
-                className="sales-card")
+                className="financials-card")
 
     CUSTOMER = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
@@ -920,6 +920,64 @@ def get_kpi_titles():
                 ],
                 className="sales-card")
 
+    # dynamic Sales
+    B2B_REVENUE = dbc.Card([
+            dbc.CardBody([
+            html.H5("B2B Sales", className="card-text-header2"),
+            html.P(
+                f"{b2b_sales}",
+                # style={"text-align": "center",  # Set text alignment to center
+                #         "color": "white"} , # Set text alignment to center
+                className="card-text-body2",
+            ),
+        ],
+        id = "weekly_rev")
+    ], className="sales-card")
+
+     # dynamic Sales
+    B2C_REVENUE = dbc.Card([
+            dbc.CardBody([
+            html.H5("B2B Sales", className="card-text-header2"),
+            html.P(
+                f"{b2c_sales}",
+                # style={"text-align": "center",  # Set text alignment to center
+                #         "color": "white"} , # Set text alignment to center
+                className="card-text-body2",
+            ),
+        ],
+        id = "weekly_rev")
+    ], className="sales-card")
+
+
+    # New Signups
+    new_signups = dbc.Card([
+        # dbc.CardHeader(f"{Category.upper()}"),
+        dbc.CardBody([
+            html.H5("New Signups", className="card-text-header2", 
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} ,
+                    ),
+            html.P(
+                f"{n_signups} ",
+                className="card-text-body2",
+            ),
+        ],
+        id = "new_signups")
+    ], className="sales-card")
+
+    # New Sales
+    new_sales_revenue = dbc.Card([
+        # dbc.CardHeader(f"{Category.upper()}"),
+        dbc.CardBody([
+            html.H5("New Sales Revenue", className="card-text-header2",
+                ),
+            html.P(
+                f"{weekly_rev}",
+                className="card-text-body2",
+            ),
+        ],
+        id = "new_sales_revenue")
+    ], className="sales-card")
 
     ##########################################################
     #       Chart the 3 rows, LHS Card, RHS Graph            #
@@ -927,24 +985,48 @@ def get_kpi_titles():
     ### FIRST ROW ###
     title_cards = dbc.Container([
         dbc.Row([
+            # First Col, 3 rows
                 dbc.Col([
                     dbc.Row([FINANCIALS], 
                             class_name = "m-2", 
-                            style={'padding': '0'}, ),
+                            style={'padding': '2'}, ),
                     dbc.Row([CUSTOMER], className = "m-2", 
                             style={'padding': '0'}, ),
                     dbc.Row([TALENT_MGT], className = "m-2", 
                             style={'padding': '0'}, ),
-                    ],width = 4),
+                    ],width = 3),
                 #############################################################
                 #           KPI VALUE CARDS LEVERS HERE                     #
                 #############################################################
+                # 4 columns in first Financials Categories.
 
                 dbc.Col([
-                    
+                    dbc.Row([B2B_REVENUE],
+                            class_name="m-2",
+                            style= {'padding': '2'}),
                 ],
-                width = 4),
+                width = 2),
 
+                dbc.Col([
+                    dbc.Row([B2C_REVENUE],
+                            class_name="m-2",
+                            style= {'padding': '2'}),
+                ],
+                width = 2),
+
+                dbc.Col([
+                    dbc.Row([new_sales_revenue],
+                            class_name="m-2",
+                            style= {'padding': '2'}),
+                ],
+                width = 2),
+
+                dbc.Col([
+                    dbc.Row([new_signups],
+                            class_name="m-2",
+                            style= {'padding': '2'}),
+                ],
+                width = 2),
 
                 ]),
     ])
@@ -960,7 +1042,7 @@ def layout_home():
     sidebar = create_sidebar()
     home_layout = html.Div(
         [
-            sidebar,
+            # sidebar,
             ### First section ##
             # create_opex_card(),
             # row_3,

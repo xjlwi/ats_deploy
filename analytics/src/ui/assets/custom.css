@@ -32,7 +32,14 @@
     /* color: #353B50; */
     outline: True;
     text-align: left;
-    background-color: #353B50;
+    background-color: #ccd2e6;
+}
+
+.financials-card {
+    /* color: #353B50; */
+    outline: True;
+    text-align: left;
+    background-color: #52eab3;
 }
 
 .card-text-header1 {
@@ -42,8 +49,8 @@
 }
 
 .card-text-header2 {
-    color: #dedcdc;
-    font-size: 20px;
+    color: #313131;
+    font-size: 24px;
     font-weight: bold;
     justify-content: flex-start;
 }
