@@ -69,6 +69,13 @@
     justify-content: flex-start;
 }
 
+.card-text-header3 {
+    color: #313131;
+    font-size: 22px;
+    font-weight: bold;
+    /* justify-content: flex-start; */
+}
+
 .card-text-body1 {
     color: #fffbfb;
     font-size: 24px;

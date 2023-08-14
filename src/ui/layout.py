@@ -889,7 +889,7 @@ def get_ceo_customer_cards():
     # dynamic Sales
     demo_conversion = dbc.Card([
                 dbc.CardBody([
-                html.H5("Demo Conversion", className="card-text-header2"),
+                html.H5("Demo Conversion", className="card-text-header3"),
                 html.P(
                     f"{demo_conversion}",
                     className="card-text-body2",
@@ -900,7 +900,7 @@ def get_ceo_customer_cards():
 
     enquiries_conversion = dbc.Card([
                 dbc.CardBody([
-                html.H5("Enquiries Conversion", className="card-text-header2"),
+                html.H5("Enquiries Conversion", className="card-text-header3"),
                 html.P(
                     f"{enquiries_conversion}",
                     className="card-text-body2",
@@ -922,7 +922,7 @@ def get_ceo_customer_cards():
     
     time_to_response = dbc.Card([
                 dbc.CardBody([
-                html.H5("Time to Request", className="card-text-header2"),
+                html.H5("Time to Request", className="card-text-header3"),
                 html.P(
                     f"{ttr}",
                     className="card-text-body2",
@@ -964,6 +964,64 @@ def get_ceo_b2b_cards():
 
     return B2B_REVENUE, B2C_REVENUE
 
+def get_ceo_talent_cards():
+    
+    # Number of Formal Trainings + Accreditions
+    professional_upskil = 10
+    n_turnover = 0
+    n_sales_lead = 2
+
+    human_development = dbc.Card([
+                dbc.CardBody([
+                html.H5("People Development", className="card-text-header3"),
+                html.P(
+                    f"{professional_upskil}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "professional_upskill")
+        ], className="sales-card")
+    
+    employee_turnover = dbc.Card([
+                dbc.CardBody([
+                html.H5("Employee Turnover", className="card-text-header2"),
+                html.P(
+                    f"{n_turnover}",
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} , # Set text alignment to center
+                    className="card-text-body2",
+                ),
+            ],
+            id = "employee_turnover")
+        ], className="sales-card")
+
+    growth_expansion = dbc.Card([
+                dbc.CardBody([
+                html.H5("Growth Expansion", className="card-text-header2"),
+                html.P(
+                    f"{n_sales_lead}",
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} , # Set text alignment to center
+                    className="card-text-body2",
+                ),
+            ],
+            id = "sales_education_growth")
+        ], className="sales-card")
+    
+    bonus_card = dbc.Card([
+                dbc.CardBody([
+                html.H5("⚠️Bonus!Urgent🎁", className="card-text-header2"),
+                html.P(
+                    "It's ASA week!",
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} , # Set text alignment to center
+                    className="card-text-body2",
+                ),
+            ],
+            id = "sales_education_growth")
+        ], className="sales-card")
+    
+    return human_development, employee_turnover, growth_expansion, bonus_card
 
 def get_kpi_titles():
     """ 
@@ -1015,7 +1073,7 @@ def get_kpi_titles():
     new_signups = dbc.Card([
         # dbc.CardHeader(f"{Category.upper()}"),
         dbc.CardBody([
-            html.H5("New Signups", className="card-text-header2", 
+            html.H5("New Signups", className="card-text-header3", 
                     # style={"text-align": "center",  # Set text alignment to center
                     #         "color": "white"} ,
                     ),
@@ -1044,6 +1102,9 @@ def get_kpi_titles():
     ## Customer cards ##
     demo_conversion, enquiry_conversion, nps_score, ttr = get_ceo_customer_cards()
 
+    ## Talent Management & Sales Growth ##
+    human_development, employee_turnover, growth_expansion, bonus_card = get_ceo_talent_cards()
+    
     ##########################################################
     #       Chart the 3 rows, LHS Card, RHS Graph            #
     ##########################################################
@@ -1073,7 +1134,11 @@ def get_kpi_titles():
                     # nps_score
                     dbc.Row([nps_score],
                             class_name="m-2",
-                            style= {'padding': '2'}),    
+                            style= {'padding': '2'}),  
+                    # human_development
+                    dbc.Row([human_development],
+                            class_name="m-2",
+                            style= {'padding': '2'}),   
                 ],
                 width = 2),
                 dbc.Col([
@@ -1083,6 +1148,10 @@ def get_kpi_titles():
                             style= {'padding': '2'}), 
                     # demo conversion
                     dbc.Row([demo_conversion],
+                            class_name="m-2",
+                            style= {'padding': '2'}),
+                    # employee_turnover
+                    dbc.Row([employee_turnover],
                             class_name="m-2",
                             style= {'padding': '2'}),
                 ],
@@ -1096,6 +1165,10 @@ def get_kpi_titles():
                     dbc.Row([enquiry_conversion],
                             class_name="m-2",
                             style= {'padding': '2'}),
+                    # growth_expansion
+                    dbc.Row([growth_expansion],
+                            class_name="m-2",
+                            style= {'padding': '2'}),
                 ],
                 width = 2),
                 dbc.Col([
@@ -1107,13 +1180,16 @@ def get_kpi_titles():
                     dbc.Row([ttr],
                             class_name="m-2",
                             style= {'padding': '2'}),   
+                    # Bonus Card
+                    dbc.Row([bonus_card],
+                            class_name="m-2",
+                            style= {'padding': '2'}),  
                 ],
                 width = 2),
 
                 ]),
     ],
     fluid=True)
-    
     
     return title_cards
 
