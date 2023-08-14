@@ -28,6 +28,13 @@
     background-color: #353B50;
 }
 
+.customer-card {
+    /* color: #353B50; */
+    outline: True;
+    text-align: left;
+    background-color: #7594fa;
+}
+
 .sales-card {
     /* color: #353B50; */
     outline: True;
@@ -40,6 +47,13 @@
     outline: True;
     text-align: left;
     background-color: #52eab3;
+}
+
+.talent-card {
+    /* color: #353B50; */
+    outline: True;
+    text-align: left;
+    background-color: #ba52ea;
 }
 
 .card-text-header1 {
