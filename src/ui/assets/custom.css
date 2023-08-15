@@ -31,7 +31,7 @@
 .customer-card {
     /* color: #353B50; */
     outline: True;
-    text-align: left;
+    text-align: center;
     background-color: #7594fa;
 }
 
@@ -45,14 +45,14 @@
 .financials-card {
     /* color: #353B50; */
     outline: True;
-    text-align: left;
+    text-align: center;
     background-color: #52eab3;
 }
 
 .talent-card {
     /* color: #353B50; */
     outline: True;
-    text-align: left;
+    text-align: center;
     background-color: #ba52ea;
 }
 
@@ -64,7 +64,7 @@
 
 .card-text-header2 {
     color: #313131;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
     justify-content: flex-start;
 }
@@ -89,6 +89,12 @@
     letter-spacing: 2px; /* Adjust the spacing between characters */
     /* font-weight: bold; */
     text-align: center;
+}
+
+.flex-box{
+    flex: 160px;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .timeline-text {

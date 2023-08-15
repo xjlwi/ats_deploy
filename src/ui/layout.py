@@ -889,47 +889,47 @@ def get_ceo_customer_cards():
     # dynamic Sales
     demo_conversion = dbc.Card([
                 dbc.CardBody([
-                html.H5("Demo Conversion", className="card-text-header3"),
+                html.H5("Demo Conversion", className="card-text-header2"),
                 html.P(
                     f"{demo_conversion}",
                     className="card-text-body2",
                 ),
             ],
             id = "demo_conversion")
-        ], className="sales-card")
+        ], className="flex-box card-style no-header-card sales-card")
 
     enquiries_conversion = dbc.Card([
                 dbc.CardBody([
-                html.H5("Enquiries Conversion", className="card-text-header3"),
+                html.H5("Enquiries Conversion", className="card-text-header2"),
                 html.P(
                     f"{enquiries_conversion}",
                     className="card-text-body2",
                 ),
             ],
             id = "enquiry_conversion")
-        ], className="sales-card")
+        ], className="flex-box card-style no-header-card sales-card")
 
     nps_scoring = dbc.Card([
                 dbc.CardBody([
-                html.H5("NPS Scoring", className="card-text-header2"),
+                html.H5("Net Promoter Score", className="card-text-header2"),
                 html.P(
                     f"{nps_score}",
                     className="card-text-body2",
                 ),
             ],
             id = "nps_scoring")
-        ], className="sales-card")
+        ], className="flex-box card-style no-header-card sales-card")
     
     time_to_response = dbc.Card([
                 dbc.CardBody([
-                html.H5("Time to Request", className="card-text-header3"),
+                html.H5("Time to Respond to Request", className="card-text-header2"),
                 html.P(
                     f"{ttr}",
                     className="card-text-body2",
                 ),
             ],
             id = "time_to_response")
-        ], className="sales-card")
+        ], className="flex-box card-style no-header-card sales-card")
     
     return demo_conversion, enquiries_conversion, nps_scoring, time_to_response
 
@@ -946,12 +946,12 @@ def get_ceo_b2b_cards():
             ),
         ],
         id = "weekly_rev")
-    ], className="sales-card")
+    ], className="flex-box card-style no-header-card sales-card")
 
      # dynamic Sales
     B2C_REVENUE = dbc.Card([
             dbc.CardBody([
-            html.H5("B2B Sales", className="card-text-header2"),
+            html.H5("B2C Sales", className="card-text-header2"),
             html.P(
                 f"{b2c_sales}",
                 # style={"text-align": "center",  # Set text alignment to center
@@ -960,7 +960,7 @@ def get_ceo_b2b_cards():
             ),
         ],
         id = "weekly_rev")
-    ], className="sales-card")
+    ], className="flex-box card-style no-header-card sales-card")
 
     return B2B_REVENUE, B2C_REVENUE
 
@@ -973,14 +973,14 @@ def get_ceo_talent_cards():
 
     human_development = dbc.Card([
                 dbc.CardBody([
-                html.H5("People Development", className="card-text-header3"),
+                html.H5("People Building", className="card-text-header2"),
                 html.P(
                     f"{professional_upskil}",
                     className="card-text-body2",
                 ),
             ],
             id = "professional_upskill")
-        ], className="sales-card")
+        ], className="flex-box card-style no-header-card sales-card")
     
     employee_turnover = dbc.Card([
                 dbc.CardBody([
@@ -993,7 +993,7 @@ def get_ceo_talent_cards():
                 ),
             ],
             id = "employee_turnover")
-        ], className="sales-card")
+        ], className="flex-box card-style no-header-card sales-card")
 
     growth_expansion = dbc.Card([
                 dbc.CardBody([
@@ -1006,20 +1006,20 @@ def get_ceo_talent_cards():
                 ),
             ],
             id = "sales_education_growth")
-        ], className="sales-card")
+        ], className="flex-box card-style no-header-card sales-card")
     
     bonus_card = dbc.Card([
                 dbc.CardBody([
-                html.H5("⚠️Bonus!Urgent🎁", className="card-text-header2"),
+                html.H5("📢 Bonus! Important! 🎁", className="card-text-header2"),
                 html.P(
-                    "It's ASA week!",
+                    "ASA week!",
                     # style={"text-align": "center",  # Set text alignment to center
                     #         "color": "white"} , # Set text alignment to center
                     className="card-text-body2",
                 ),
             ],
             id = "sales_education_growth")
-        ], className="sales-card")
+        ], className="flex-box card-style no-header-card sales-card")
     
     return human_development, employee_turnover, growth_expansion, bonus_card
 
@@ -1031,37 +1031,31 @@ def get_kpi_titles():
                 # dbc.CardHeader(f"{Category.upper()}"),
                     dbc.CardImg(src="assets/sidebar/dollar.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
                     dbc.CardBody([
-                        html.H5("FINANCIALS", className="card-text-header2"), 
-                        html.P(
-                            className="card-text-body2",
-                        )],
+                        html.H5("FINANCIALS STREAM", className="card-text-header2"), 
+                        ],
                     id = "financials_card"),
                 ],
-                className="financials-card")
+                className="flex-box card-style no-header-card financials-card")
 
     CUSTOMER = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
                     dbc.CardImg(src="assets/sidebar/rating.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
                     dbc.CardBody([
                         html.H5("CUSTOMER CENTRICITY", className="card-text-header2"), 
-                        html.P(
-                            className="card-text-body2",
-                        )],
+                        ],
                     id = "customer_centric"),
                 ],
-                className="customer-card")
+                className="flex-box card-style no-header-card customer-card")
 
     TALENT_MGT = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
                     dbc.CardImg(src="assets/sidebar/talent-management.png", top=True,  style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
                     dbc.CardBody([
                         html.H5("TALENT MANAGEMENT", className="card-text-header2"), 
-                        html.P(
-                            className="card-text-body2",
-                        )],
+                        ],
                     id = "talent_management"),
                 ],
-                className="talent-card")
+                className="flex-box card-style no-header-card talent-card")
 
     ######################################################################
     #                   CEO KPI                                          #
@@ -1073,9 +1067,7 @@ def get_kpi_titles():
     new_signups = dbc.Card([
         # dbc.CardHeader(f"{Category.upper()}"),
         dbc.CardBody([
-            html.H5("New Signups", className="card-text-header3", 
-                    # style={"text-align": "center",  # Set text alignment to center
-                    #         "color": "white"} ,
+            html.H5("New Signup", className="card-text-header2", 
                     ),
             html.P(
                 f"{n_signups} ",
@@ -1083,7 +1075,7 @@ def get_kpi_titles():
             ),
         ],
         id = "new_signups")
-    ], className="sales-card")
+    ], className="flex-box card-style no-header-card sales-card")
 
     # New Sales
     new_sales_revenue = dbc.Card([
@@ -1097,7 +1089,7 @@ def get_kpi_titles():
             ),
         ],
         id = "new_sales_revenue")
-    ], className="sales-card")
+    ], className="flex-box card-style no-header-card sales-card")
 
     ## Customer cards ##
     demo_conversion, enquiry_conversion, nps_score, ttr = get_ceo_customer_cards()
@@ -1113,14 +1105,17 @@ def get_kpi_titles():
         dbc.Row([
             # First Col, 3 rows
                 dbc.Col([
-                    dbc.Row([FINANCIALS], 
-                            class_name = "m-2", 
-                            style={'padding': '2'}, ),
-                    dbc.Row([CUSTOMER], className = "m-2", 
-                            style={'padding': '2'}, ),
-                    dbc.Row([TALENT_MGT], className = "m-2", 
-                            style={'padding': '2'}, ),
-                    ],width = 3),
+                    html.Div([FINANCIALS], style={'margin-bottom': '15px'}),
+                    html.Div([CUSTOMER], style={'margin-bottom': '15px'}),
+                    html.Div([TALENT_MGT], style={'margin-bottom': '10px'}),
+                    # dbc.Row([FINANCIALS], 
+                    #         class_name = "flex-box", 
+                    #         style={'padding': '2'}, ),
+                    # dbc.Row([CUSTOMER], className = "flex-box", 
+                    #         style={'padding': '2'}, ),
+                    # dbc.Row([TALENT_MGT], className = "flex-box", 
+                    #         style={'padding': '2'}, ),
+                    ],xs = 4),
                 #############################################################
                 #           KPI VALUE CARDS LEVERS HERE                     #
                 #############################################################
@@ -1128,64 +1123,76 @@ def get_kpi_titles():
 
                 dbc.Col([
                     # B2b revenue
-                    dbc.Row([B2B_REVENUE],
-                            class_name="m-2",
-                            style= {'padding': '2'}),
+                    html.Div([B2B_REVENUE], style={'margin-bottom': '15px'}),
+                    # dbc.Row([B2B_REVENUE],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),
                     # nps_score
-                    dbc.Row([nps_score],
-                            class_name="m-2",
-                            style= {'padding': '2'}),  
+                    html.Div([nps_score], style={'margin-bottom': '15px'}),
+                    # dbc.Row([nps_score],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),  
                     # human_development
-                    dbc.Row([human_development],
-                            class_name="m-2",
-                            style= {'padding': '2'}),   
+                    html.Div([human_development], style={'margin-bottom': '15px'}),
+                    # dbc.Row([human_development],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),   
                 ],
-                width = 2),
+                xs = 2),
                 dbc.Col([
                     # B2C revenue
-                    dbc.Row([B2C_REVENUE],
-                            class_name="m-2",
-                            style= {'padding': '2'}), 
+                    html.Div([B2C_REVENUE], style={'margin-bottom': '10px'}),
+                    # dbc.Row([B2C_REVENUE],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}), 
                     # demo conversion
-                    dbc.Row([demo_conversion],
-                            class_name="m-2",
-                            style= {'padding': '2'}),
+                    html.Div([demo_conversion], style={'margin-bottom': '10px'}),
+                    # dbc.Row([demo_conversion],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),
                     # employee_turnover
-                    dbc.Row([employee_turnover],
-                            class_name="m-2",
-                            style= {'padding': '2'}),
+                    html.Div([employee_turnover], style={'margin-bottom': '15px'}),
+                    # dbc.Row([employee_turnover],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),
                 ],
-                width = 2),
+                xs = 2),
                 dbc.Col([
                     # new sales revenue
-                    dbc.Row([new_sales_revenue],
-                            class_name="m-2",
-                            style= {'padding': '2'}, align="center"),
+                    html.Div([new_sales_revenue], style={'margin-bottom': '10px'}),
+                    # dbc.Row([new_sales_revenue],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}, align="center"),
                     # enquiry conversion
-                    dbc.Row([enquiry_conversion],
-                            class_name="m-2",
-                            style= {'padding': '2'}),
+                    html.Div([enquiry_conversion], style={'margin-bottom': '10px'}),
+                    # dbc.Row([enquiry_conversion],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),
                     # growth_expansion
-                    dbc.Row([growth_expansion],
-                            class_name="m-2",
-                            style= {'padding': '2'}),
+                    html.Div([growth_expansion], style={'margin-bottom': '10px'}),
+                    # dbc.Row([growth_expansion],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),
                 ],
-                width = 2),
+                xs = 2),
                 dbc.Col([
                     # new signups
-                    dbc.Row([new_signups],
-                            class_name="m-2",
-                            style= {'padding': '2'}),
+                    html.Div([new_signups], style={'margin-bottom': '10px'}),
+                    # dbc.Row([new_signups],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),
                     # Time to response
-                    dbc.Row([ttr],
-                            class_name="m-2",
-                            style= {'padding': '2'}),   
+                    html.Div([ttr], style={'margin-bottom': '10px'}),
+                    # dbc.Row([ttr],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),   
                     # Bonus Card
-                    dbc.Row([bonus_card],
-                            class_name="m-2",
-                            style= {'padding': '2'}),  
+                    html.Div([bonus_card], style={'margin-bottom': '10px'}),
+                    # dbc.Row([bonus_card],
+                    #         class_name="m-2",
+                    #         style= {'padding': '2'}),  
                 ],
-                width = 2),
+                xs = 2),
 
                 ]),
     ],
@@ -1194,6 +1201,149 @@ def get_kpi_titles():
     return title_cards
 
 title_cards = get_kpi_titles()
+
+############################################
+#           PRODUCT HEADER                 #
+############################################
+def get_tech_kpi_cards():
+    # Number of Formal Trainings + Accreditions
+    platform_costs = 3897
+    user_acquisition_cost = 30
+    n_sales_lead = 2
+    n_projects_pipeline = 4
+
+    platform_costs = dbc.Card([
+                dbc.CardBody([
+                html.H5("Platform cost YTD (U$D)", className="card-text-header2"),
+                html.P(
+                    f"{platform_costs}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "platform_cost")
+        ], className="flex-box card-style no-header-card sales-card")
+    
+    conversion_cost = dbc.Card([
+                dbc.CardBody([
+                html.H5("User Acq. Cost U$D", className="card-text-header2"),
+                html.P(
+                    f"{user_acquisition_cost}",
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} , # Set text alignment to center
+                    className="card-text-body2",
+                ),
+            ],
+            id = "user_acquisition")
+        ], className="flex-box card-style no-header-card sales-card")
+
+    n_project = dbc.Card([
+                dbc.CardBody([
+                html.H5("Product Dev Pipeline", className="card-text-header2"),
+                html.P(
+                    f"{n_projects_pipeline}",
+                    # style={"text-align": "center",  # Set text alignment to center
+                    #         "color": "white"} , # Set text alignment to center
+                    className="card-text-body2",
+                ),
+            ],
+            id = "n_project_pipeline")
+        ], className="flex-box card-style no-header-card sales-card")
+    
+    # product_sales = dbc.Card([
+    #             dbc.CardBody([
+    #             html.H5("📢 Bonus! Important! 🎁", className="card-text-header2"),
+    #             html.P(
+    #                 "ASA week!",
+    #                 # style={"text-align": "center",  # Set text alignment to center
+    #                 #         "color": "white"} , # Set text alignment to center
+    #                 className="card-text-body2",
+    #             ),
+    #         ],
+    #         id = "sales_education_growth")
+    #     ], className="flex-box card-style no-header-card sales-card")
+    
+    return platform_costs, conversion_cost, n_project#, bonus_card
+
+def get_tech_headers():
+    FINANCIALS = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                    dbc.CardImg(src="assets/sidebar/dollar.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardBody([
+                        html.H5("FINANCIALS STREAM", className="card-text-header2"), 
+                        ],
+                    id = "financials_card"),
+                ],
+                className="flex-box card-style no-header-card financials-card")
+
+    PLATFORM = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                    dbc.CardImg(src="assets/sidebar/rating.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardBody([
+                        html.H5("CUSTOMER CENTRICITY", className="card-text-header2"), 
+                        ],
+                    id = "customer_centric"),
+                ],
+                className="flex-box card-style no-header-card customer-card")
+
+    USER = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                    dbc.CardImg(src="assets/sidebar/gauge-chart.png", top=True,  style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardBody([
+                        html.H5("PLATFORM MANAGEMENT", className="card-text-header2"), 
+                        ],
+                    id = "talent_management"),
+                ],
+                className="flex-box card-style no-header-card talent-card")
+    
+    return PLATFORM, USER, FINANCIALS
+
+def get_tech_kpi():
+    # Get headers
+    PLATFORM, USER, FINANCIALS = get_tech_headers()
+
+    # Get score cards
+    platform_costs, conversion_cost, n_project = get_tech_kpi_cards()
+
+    ### FIRST ROW ###
+    tech_cards = dbc.Container([
+        dbc.Row([
+            # First Col, 3 rows
+                dbc.Col([
+                    html.Div([FINANCIALS], style={'margin-bottom': '15px'}),
+                    html.Div([PLATFORM], style={'margin-bottom': '10px'}),
+                    html.Div([USER], style={'margin-bottom': '15px'}),
+                    # dbc.Row([FINANCIALS], 
+                    #         class_name = "flex-box", 
+                    #         style={'padding': '2'}, ),
+                    # dbc.Row([CUSTOMER], className = "flex-box", 
+                    #         style={'padding': '2'}, ),
+                    # dbc.Row([TALENT_MGT], className = "flex-box", 
+                    #         style={'padding': '2'}, ),
+                    ],xs = 4),
+
+                     #############################################################
+                #           KPI VALUE CARDS LEVERS HERE                     #
+                #############################################################
+                # 4 columns in first Financials Categories.
+
+                dbc.Col([
+                    # Platform cost
+                    html.Div([platform_costs], style={'margin-bottom': '15px'}),
+                    # Conversion Score
+                    html.Div([conversion_cost], style={'margin-bottom': '15px'}),
+                    # Project pipeline
+                    html.Div([n_project], style={'margin-bottom': '15px'}),
+                ],
+                xs = 6),
+
+                ]),
+    ],
+    fluid=True)
+
+    return tech_cards
+
+tech_cards = get_tech_kpi()
+
 #################################################################
 #                           LAYOUT                              #
 #################################################################
@@ -1201,12 +1351,6 @@ def layout_home():
     sidebar = create_sidebar()
     home_layout = html.Div(
         [
-            # sidebar,
-            ### First section ##
-            # create_opex_card(),
-            # row_3,
-            # ### Second section ##
-            # target_revenue,
             ### Test new section:
             get_kpi_titles()
         ],
@@ -1246,14 +1390,8 @@ def layout_creative():
 def layout_product():
     return html.Div(
         children=[
-            time_slicer,
-            pb,
-            # html.H1("🌐 Product Page 🐱‍💻", className='page-header'),
-            # product_menu,
-            # html.Div([
-            #     dcc.Graph(id='GraphProduct'),
-            # ],
-            # style={'width': '50%', 'display': 'inline-block'}),
+            ### Test new section:
+            tech_cards,
 
         ],
         id="PRODUCT_PAGE",
