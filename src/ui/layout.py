@@ -549,9 +549,9 @@ placeholder = dbc.Container([
                         html.Br(),
                         dbc.DropdownMenu(
                                 [
-                                    dbc.DropdownMenuItem("Upcoming Event 1"),
-                                    dbc.DropdownMenuItem("Upcoming Event 2"),
-                                    dbc.DropdownMenuItem("Upcoming Event 3"),
+                                    dbc.DropdownMenuItem("UIUX Feedback International School of Nanshan Shenzhen"),
+                                    dbc.DropdownMenuItem("ASA Hefei International School Beijing"),
+                                    dbc.DropdownMenuItem("ASA International School of Nanshan Shenzhen"),
                                 ],
                                 label="Upcoming Events",
                             )
@@ -1352,7 +1352,9 @@ def layout_home():
     home_layout = html.Div(
         [
             ### Test new section:
-            get_kpi_titles()
+            get_kpi_titles(),
+            tech_cards,
+
         ],
         className='page-bg'
     )
