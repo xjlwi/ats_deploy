@@ -922,7 +922,7 @@ def get_ceo_customer_cards():
     
     time_to_response = dbc.Card([
                 dbc.CardBody([
-                html.H5("Time to Respond to Request", className="card-text-header2"),
+                html.H5("Request Reponse Time", className="card-text-header2"),
                 html.P(
                     f"{ttr}",
                     className="card-text-body2",
@@ -1029,7 +1029,8 @@ def get_kpi_titles():
     """
     FINANCIALS = dbc.Card([
                 # dbc.CardHeader(f"{Category.upper()}"),
-                    dbc.CardImg(src="assets/sidebar/dollar.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardImg(src="assets/sidebar/dollar.png", 
+                                style={'width': image_width, 'height': image_height, 'object-position': 'left'}),
                     dbc.CardBody([
                         html.H5("FINANCIALS STREAM", className="card-text-header2"), 
                         ],
