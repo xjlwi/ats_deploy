@@ -1612,7 +1612,6 @@ def layout_home():
         [
             ### Test new section:
             get_kpi_titles(),
-            tech_cards,
 
         ],
         className='page-bg'
@@ -1626,7 +1625,6 @@ def layout_marketing():
             html.Br(),
             placeholder_marketing,
             target_revenue,
-            pb,
         ],
         className='page-bg'
         
