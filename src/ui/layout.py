@@ -12,9 +12,13 @@ from pathlib import Path
 dir = Path(__file__).parent
 print (os.getcwd())
 # os.chdir(dir)
-#
+#####################################################################
+#               DATA LOADING                                        #
+#####################################################################
 Notion_db_content = 'https://www.notion.so/novalearn/b194bb2c04b1444084d1c3610d8bc672?v=0a63faf0c5074a9d9240e5a7f9c7a869&pvs=4'
 courses_raw = pd.read_csv('data/All Courses b194bb2c04b1444084d1c3610d8bc672.csv')
+raw = pd.read_csv('data/All Courses b194bb2c04b1444084d1c3610d8bc672_all.csv')
+
 
 n_signups = 44
 b2b_sales = '$ 3000'
@@ -42,6 +46,63 @@ def preprocess_courses(courses_raw:pd.DataFrame) -> pd.DataFrame:
     courses_by_status = courses_by_status.reset_index(drop=False)
 
     return courses_by_status
+
+def preprocess_courses_published(raw:pd.DataFrame):
+    raw.columns = [x.lower().replace(' ', '_') for x in raw.columns]
+
+    # Published
+    data_df = raw.copy()
+    status_courses = data_df['status'].value_counts().to_frame().reset_index(drop=False)
+    status_courses.columns =['course', 'status']
+    status_courses
+
+    # Created Date
+    course_created = raw.copy()
+    course_created ['created_year_mon'] = pd.to_datetime(course_created['course_created'])#.dt.strftime('%b-%Y')
+    course_created['publish_date'] = pd.to_datetime(course_created['publish_date'])#.dt.strftime('%b-%Y')
+    course_created = course_created.filter(items = ['name', 'subject', 'created_year_mon', 'publish_date'])
+    course_created['time_difference'] = course_created['publish_date'] - course_created['created_year_mon']
+    course_created['time_difference_days'] = course_created['time_difference'].dt.days#apply(lambda x: x.month)
+    course_created['time_difference_months'] = course_created['time_difference'] // 30  # Approximate value for months
+    
+    course_published_timeline = course_created.filter(items = ['name', 'subject', 'publish_date']).dropna(subset=['publish_date'])
+    course_published_timeline['publish_date'] = pd.to_datetime(course_published_timeline['publish_date'])
+
+    # Number of published course by 3 months, 6 months
+    course_published_timeline['yearmon'] = course_published_timeline['publish_date'].dt.strftime('%b-%y')
+    course_published_mon = course_published_timeline.groupby('yearmon')['subject'].value_counts().to_frame()#.reset_index()
+    course_published_mon.columns = ['n']
+    course_published_mon = course_published_mon.reset_index()
+    course_published_mon['publish_month'] = pd.to_datetime(course_published_mon['yearmon'], format= "%b-%y")
+
+    monthly_total = course_published_mon.groupby('publish_month')['n'].sum().reset_index()
+    # Create bar chart
+    bar_chart = px.bar(
+        course_published_mon, x='publish_month', y='n', color='subject',
+        title='Monthly Counts by Subject (Bar Chart)',
+        barmode='group'
+    )
+
+    # Create line chart
+    line_chart = px.line(
+        monthly_total, x='publish_month', y='n',
+        title='Monthly Total Counts by Subject (Line Chart)'
+    )
+    # Combine charts
+    for trace in line_chart.data:
+        bar_chart.add_traces(trace)
+
+    bar_chart.update_layout(title='Combined Monthly Total Counts of Subject', 
+                            yaxis_title = 'Number of subjects',
+                            xaxis_title= 'Published dates by month',
+                            # paper_bgcolor='white',  # Set background color to white
+                            plot_bgcolor='white',   # Set plot area background color to white
+                            xaxis=dict(showline=True, linewidth=2, linecolor='black', mirror=True),  # Add x-axis border
+                            yaxis=dict(showline=True, linewidth=2, linecolor='black', mirror=True),
+                            margin=dict(l=40, r=40, t=40, b=40))  # Add y-axis border
+
+    # bar_chart.show()  # To display the chart
+    return bar_chart
 
 def get_courses_barchart(courses_by_status: pd.DataFrame, time_filter=None):
 
@@ -677,14 +738,19 @@ graph = dcc.Graph(
 #              COMPONENTS CREATIVE BOTTOM              #
 ########################################################
 
-def get_courses_chart(courses_raw, time_filter=None):
+def get_courses_chart(courses_raw):
     
     courses_by_status = preprocess_courses(courses_raw)
-    print (f'--------------- Courses------  {time_filter}')
     # Create a graph component
     courses_graph = dcc.Graph(
         figure = get_courses_barchart(courses_by_status),
-        style = {'height': "800px"}
+        style = {'height': "400px"}
+    )
+
+    # Create a graph component
+    courses_monthly_barchart = dcc.Graph(
+        figure = preprocess_courses_published(raw),
+        style = {'height': "450px"}, 
     )
     # Position graph within the container
     courses_chart = dbc.Container(
@@ -695,7 +761,17 @@ def get_courses_chart(courses_raw, time_filter=None):
                 )
             ]
             ),
+            dbc.Row(
+                [
 
+                ]
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(children=[courses_monthly_barchart] 
+                )
+            ]
+            ),
         ],
         id='CoursesTracker',
         className='custom-container',
@@ -1384,7 +1460,6 @@ def layout_creative():
             target_revenue,
             html.H3("Subjects published till date", className='header2'),
             html.Br(),
-            time_slicer,
             courses_chart,
         ],
         className='page-bg'
