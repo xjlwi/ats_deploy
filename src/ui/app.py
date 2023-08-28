@@ -81,10 +81,6 @@ def update_graph_product(product_category):
 def update_cards_heading(Category):
     return update_cards(Category)
     
-@app.callback(Output ("CoursesTracker", 'figure'), [Input('time-filter', 'value')])
-def update_courses_charts(time_filter):
-    return get_courses_chart(courses_raw, time_filter)
-
 # Create a callback to update the progress bar
 @app.callback(
     Output ("progressBar", "children"), ## TODO
@@ -92,6 +88,8 @@ def update_courses_charts(time_filter):
 )
 def update_progress(n_clicks):
     return update_progress_bar(n_clicks)
+
+# Create callback to filter Novalearn Dates for Courses
 
 if __name__ == '__main__':
     app.run_server(debug=True)
