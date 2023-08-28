@@ -603,7 +603,7 @@ def update_progress_bar(n_clicks):
 
 pb = update_progress_bar(n_clicks=None)
 
-placeholder = dbc.Container([
+placeholder_marketing = dbc.Container([
                 dbc.Row([
                     ## Upcoming events
                     dbc.Col([
@@ -624,8 +624,8 @@ placeholder = dbc.Container([
                         html.Br(),
                         dbc.DropdownMenu(
                                 [
-                                    dbc.DropdownMenuItem("Ongoing Event 1"),
-                                    dbc.DropdownMenuItem("Ongoing Event 2"),
+                                    dbc.DropdownMenuItem("ASA Sayfol International School"),
+                                    dbc.DropdownMenuItem("NovaKits update!"),
                                     dbc.DropdownMenuItem("Ongoing Event 3"),
                                 ],
                                 label="Ongoing Events",
@@ -755,12 +755,12 @@ def get_courses_chart(courses_raw):
     # Position graph within the container
     courses_chart = dbc.Container(
         [
-            dbc.Row(
-                [
-                    dbc.Col(children=[courses_graph] 
-                )
-            ]
-            ),
+            # dbc.Row(
+            #     [
+            #         dbc.Col(children=[courses_graph] 
+            #     )
+            # ]
+            # ),
             dbc.Row(
                 [
 
@@ -1280,6 +1280,188 @@ def get_kpi_titles():
 title_cards = get_kpi_titles()
 
 ############################################
+#           CREATIVE HEADER                #
+############################################
+def get_creative_headers():
+    FINANCIALS = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                    dbc.CardImg(src="assets/sidebar/dollar.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardBody([
+                        html.H5("FINANCIALS STREAM", className="card-text-header2"), 
+                        ],
+                    id = "financials_card"),
+                ],
+                className="flex-box card-style no-header-card financials-card")
+
+    PRODUCTION = dbc.Card([
+                # dbc.CardHeader(f"{Category.upper()}"),
+                    dbc.CardImg(src="assets/sidebar/video-camera.png", top=True, style={'width': image_width, 'height': image_height, 'margin': 'auto'}),
+                    dbc.CardBody([
+                        html.H5("PRODUCTION STUDIO", className="card-text-header2"), 
+                        ],
+                    id = "production_studio"),
+                ],
+                className="flex-box card-style no-header-card customer-card")
+
+    
+    return PRODUCTION, FINANCIALS
+
+def get_creative_kpi_cards():
+     # Number of Formal Trainings + Accreditions
+    creative_revenue = '500*'
+    user_acquisition_cost = '30*'
+    white_label_revenue = '200*'
+    avg_course_cost = 400
+    n_published = 71
+    n_editing = 4
+    ready_for_edit = 17
+    scripts_completed = 5
+
+    revenue_total = dbc.Card([
+                dbc.CardBody([
+                html.H5("Revenue by 2025 (U$D)", className="card-text-header2"),
+                html.P(
+                    f"{creative_revenue}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "revenue_total")
+        ], className="flex-box card-style no-header-card sales-card")
+    
+    production_rev = dbc.Card([
+                dbc.CardBody([
+                html.H5("Production Revenue U$D", className="card-text-header2"),
+                html.P(
+                    f"{user_acquisition_cost}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "production_rev")
+        ], className="flex-box card-style no-header-card sales-card")
+
+    white_label = dbc.Card([
+                dbc.CardBody([
+                html.H5("White Labeling Revenue", className="card-text-header2"),
+                html.P(
+                    f"{white_label_revenue}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "white_label")
+        ], className="flex-box card-style no-header-card sales-card")
+    
+    cost_per_course = dbc.Card([
+                dbc.CardBody([
+                html.H5("Course per Course", className="card-text-header2"),
+                html.P(
+                    f"{avg_course_cost}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "cost_per_course")
+        ], className="flex-box card-style no-header-card sales-card")
+    
+    published_course = dbc.Card([
+                dbc.CardBody([
+                html.H5("# Published courses", className="card-text-header2"),
+                html.P(
+                    f"{n_published}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "cost_per_course")
+        ], className="flex-box card-style no-header-card sales-card")
+    
+    editing_filming_course = dbc.Card([
+                dbc.CardBody([
+                html.H5("# Editing videos", className="card-text-header2"),
+                html.P(
+                    f"{n_editing}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "editing_course")
+        ], className="flex-box card-style no-header-card sales-card")
+    
+    ready_for_edit_course = dbc.Card([
+                dbc.CardBody([
+                html.H5("# Ready for Edits", className="card-text-header2"),
+                html.P(
+                    f"{ready_for_edit}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "ready_for_edit_course")
+        ], className="flex-box card-style no-header-card sales-card")
+    
+    scripts_complete_course = dbc.Card([
+                dbc.CardBody([
+                html.H5("# Scripts completed", className="card-text-header2"),
+                html.P(
+                    f"{scripts_completed}",
+                    className="card-text-body2",
+                ),
+            ],
+            id = "ready_for_edit_course")
+        ], className="flex-box card-style no-header-card sales-card")
+    
+    return revenue_total, production_rev, white_label, cost_per_course, published_course, \
+        editing_filming_course, ready_for_edit_course, scripts_complete_course
+
+def get_creative_kpi():
+    # Get headers
+    PRODUCTION, FINANCIALS = get_creative_headers()
+
+    # Get score cards
+    revenue_total, production_rev, white_label, cost_per_course, published_course, \
+        editing_filming_course, ready_for_edit_course, scripts_complete_course = get_creative_kpi_cards()
+
+    ### FIRST ROW ###
+    creative_cards = dbc.Container([
+        dbc.Row([
+            # First Col, 3 rows
+                dbc.Col([
+                    html.Div([FINANCIALS], style={'margin-bottom': '15px'}),
+                    html.Div([PRODUCTION], style={'margin-bottom': '15px'}),
+                    ],xs = 3),
+
+                #############################################################
+                #           KPI VALUE CARDS LEVERS HERE                     #
+                #############################################################
+                # 4 columns in first Financials Categories.
+
+                dbc.Col([
+                    # Total Revenue Production
+                    html.Div([revenue_total], style={'margin-bottom': '15px'}),
+                    # N Published Course
+                    html.Div([published_course], style={'margin-bottom': '15px'}),
+                ],
+                xs = 3),
+
+                dbc.Col([
+                    # Production Revenue
+                    html.Div([production_rev], style={'margin-bottom': '15px'}),
+                    # N Editing Course
+                    html.Div([editing_filming_course], style={'margin-bottom': '15px'}),
+                ],
+                xs = 3),
+
+                dbc.Col([
+                    # White Label Content
+                    html.Div([white_label], style={'margin-bottom': '15px'}),
+                    # N Ready for Edit Course
+                    html.Div([ready_for_edit_course], style={'margin-bottom': '15px'}),
+                ],
+                xs = 3),
+
+                ]),
+    ],
+    fluid=True)
+
+    return creative_cards
+
+creative_cards = get_creative_kpi()
+############################################
 #           PRODUCT HEADER                 #
 ############################################
 def get_tech_kpi_cards():
@@ -1442,9 +1624,8 @@ def layout_marketing():
         children=[
             html.H1(" Marketing Page", className='page-header'),
             html.Br(),
-            placeholder,
+            placeholder_marketing,
             target_revenue,
-            time_slicer,
             pb,
         ],
         className='page-bg'
@@ -1457,7 +1638,7 @@ def layout_creative():
         children=[
             html.H1("🎨 Creative and Content Page", className='page-header'),
             html.Br(),
-            target_revenue,
+            creative_cards,
             html.H3("Subjects published till date", className='header2'),
             html.Br(),
             courses_chart,
